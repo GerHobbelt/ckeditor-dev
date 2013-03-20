@@ -608,6 +608,16 @@
 			if ( this.disabled )
 				return true;
 
+			// If rules are an array, expand it and return the logical OR value of
+			// the rules.
+			if ( CKEDITOR.tools.isArray( test ) ) {
+				for ( var i = test.length ; i-- ; ) {
+					if ( this.check( test[ i ], applyTransformations, strictCheck ) )
+						return true;
+				}
+				return false;
+			}
+
 			var element, result, cacheKey;
 
 			if ( typeof test == 'string' ) {
@@ -1721,7 +1731,7 @@
 				var value = element.attributes.align;
 
 				if ( value == 'left' || value == 'right' )
-					element.styles.float = value;
+					element.styles[ 'float' ] = value; // Uh... GCC doesn't like the 'float' prop name.
 			}
 
 			delete element.attributes.align;
@@ -1735,13 +1745,13 @@
 		 */
 		alignmentToAttribute: function( element ) {
 			if ( !( 'align' in element.attributes ) ) {
-				var value = element.styles.float;
+				var value = element.styles[ 'float' ];
 
 				if ( value == 'left' || value == 'right' )
 					element.attributes.align = value;
 			}
 
-			delete element.styles.float;
+			delete element.styles[ 'float' ]; // Uh... GCC doesn't like the 'float' prop name.
 		},
 
 		/**

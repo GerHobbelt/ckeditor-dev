@@ -56,11 +56,13 @@
 			}
 
 			this.cssClassRegex = new RegExp( '(?:^|\\s+)(?:' + classes.join( '|' ) + ')(?=$|\\s)' );
+			this.requiredContent = 'p(' + this.cssClassName + ')';
+		}
+		else {
+			this.requiredContent = 'p{text-align}';
 		}
 
 		this.allowedContent = {
-			// TODO this is not a complete list of elements.
-			// TODO how is it image alignment changed by justify buttons? Where should it be allowed?
 			'caption div h1 h2 h3 h4 h5 h6 p pre td th li': {
 				// Do not add elements, but only text-align style if element is validated by other rule.
 				propertiesOnly: true,
@@ -68,7 +70,6 @@
 				classes: this.cssClassName || null
 			}
 		};
-		this.requiredContent = 'p{text-align}';
 	}
 
 	function onDirChanged( e ) {

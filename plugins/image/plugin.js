@@ -19,20 +19,19 @@
 			// Register the dialog.
 			CKEDITOR.dialog.add( pluginName, this.path + 'dialogs/image.js' );
 
-			var allowed = 'img[alt,!src]{border-style,border-width,height,margin,margin-bottom,margin-left,margin-right,margin-top,width}',
+			var allowed = 'img[alt,!src]{border-style,border-width,float,height,margin,margin-bottom,margin-left,margin-right,margin-top,width}',
 				required = 'img[alt,src]';
 
 			if ( CKEDITOR.dialog.isTabEnabled( editor, pluginName, 'advanced' ) )
 				allowed = 'img[alt,dir,id,lang,longdesc,!src,title]{*}(*)';
-			if ( CKEDITOR.dialog.isTabEnabled( editor, pluginName, 'link' ) )
-				allowed += ';a[!href]';
 
 			// Register the command.
 			editor.addCommand( pluginName, new CKEDITOR.dialogCommand( pluginName, {
 				allowedContent: allowed,
 				requiredContent: required,
 				contentTransformations: [
-					[ 'img{width}: sizeToStyle', 'img[width]: sizeToAttribute' ]
+					[ 'img{width}: sizeToStyle', 'img[width]: sizeToAttribute' ],
+					[ 'img{float}: alignmentToStyle', 'img[align]: alignmentToAttribute' ]
 				]
 			} ) );
 

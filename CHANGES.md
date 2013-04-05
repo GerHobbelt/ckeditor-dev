@@ -1,6 +1,16 @@
 CKEditor 4 Changelog
 ====================
 
+## CKEditor 4.2
+
+## CKEditor 4.1.1
+
+* [#10172](http://dev.ckeditor.com/ticket/10172): Pressing delete/backspace in empty table cell moves cursor to next/previous cell.
+* [#10219](http://dev.ckeditor.com/ticket/10219): Error thrown when destroying an instance in parallel with a mouseup event.
+* [#10265](http://dev.ckeditor.com/ticket/10265): Wrong loop type in filebrowser plugin.
+* [#10249](http://dev.ckeditor.com/ticket/10249): Wrong undo/redo states at start.
+* [#10268](http://dev.ckeditor.com/ticket/10268): "Show blocks" does not recover after switching to sour source view.
+
 ## CKEditor 4.1
 
 * [#10192](http://dev.ckeditor.com/ticket/10192): Closing lists with Enter key does not work with Advanced Content Filter in several cases.
@@ -35,9 +45,9 @@ CKEditor 4 Changelog
 
 ## CKEditor 4.0.3
 
-* [#10196](http://dev.ckeditor.com/ticket/10196): Fixed context menus not displayed with keyboard shortcuts when autogrow is enabled.
-* [#10212](http://dev.ckeditor.com/ticket/10212): [IE7-10] Undo command throws errors after multiple switches between source and WYSIWYG.
-* [#10219](http://dev.ckeditor.com/ticket/10219): [Inline editor] Error thrown after editor.destroy().
+* [#10196](http://dev.ckeditor.com/ticket/10196): Fixed context menus not opening with keyboard shortcuts when Autogrow is enabled.
+* [#10212](http://dev.ckeditor.com/ticket/10212): [IE7-10] Undo command throws errors after multiple switches between Source and WYSIWYG view.
+* [#10219](http://dev.ckeditor.com/ticket/10219): [Inline editor] Error thrown after calling editor.destroy().
 
 ## CKEditor 4.0.2
 

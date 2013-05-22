@@ -4,7 +4,7 @@
  */
 
 /**
- * @fileOverview Defines the {@link CKEDITOR.editor} class, which represents an
+ * @fileOverview Defines the {@link CKEDITOR.editor} class that represents an
  *		editor instance.
  */
 
@@ -15,7 +15,7 @@
 
 	/**
 	 * Represents an editor instance. This constructor should be rarely
-	 * used, in favor of the {@link CKEDITOR} editor creation functions.
+	 * used in favor of the {@link CKEDITOR} editor creation functions.
 	 *
 	 * @class CKEDITOR.editor
 	 * @mixins CKEDITOR.event
@@ -24,7 +24,6 @@
 	 * @param {CKEDITOR.dom.element} [element] The DOM element upon which this editor
 	 * will be created.
 	 * @param {Number} [mode] The element creation mode to be used by this editor.
-	 * will be created.
 	 */
 	function Editor( instanceConfig, element, mode ) {
 		// Call the CKEDITOR.event constructor to initialize this instance.
@@ -39,7 +38,7 @@
 			if ( !( element instanceof CKEDITOR.dom.element ) )
 				throw new Error( 'Expect element of type CKEDITOR.dom.element.' );
 			else if ( !mode )
-				throw new Error( 'One of the element mode must be specified.' );
+				throw new Error( 'One of the element modes must be specified.' );
 
 			if ( CKEDITOR.env.ie && CKEDITOR.env.quirks && mode == CKEDITOR.ELEMENT_MODE_INLINE ) {
 				throw new Error( 'Inline element mode is not supported on IE quirks.' );
@@ -363,6 +362,8 @@
 
 	function loadLang( editor ) {
 		CKEDITOR.lang.load( editor.config.language, editor.config.defaultLanguage, function( languageCode, lang ) {
+			var configTitle = editor.config.title;
+
 			/**
 			 * The code for the language resources that have been loaded
 			 * for the user interface elements of this editor instance.
@@ -386,6 +387,19 @@
 			// from different language code files, we need a copy of lang,
 			// not a direct reference to it.
 			editor.lang = CKEDITOR.tools.prototypedCopy( lang );
+
+			/**
+			 * Indicates the human-readable title of this editor. Although this is a read-only property,
+			 * it can be initialized with {@link CKEDITOR.config#title}.
+			 *
+			 * **Note:** Please don't confuse this property with {@link CKEDITOR.editor#name editor.name}
+			 * which identifies the instance in {@link CKEDITOR#instances} literal.
+			 *
+			 * @since 4.2
+			 * @readonly
+			 * @property {String/Boolean}
+			 */
+			editor.title = typeof configTitle == 'string' || configTitle === false ? configTitle : [ editor.lang.editor, editor.name ].join( ', ' );
 
 			// We're not able to support RTL in Firefox 2 at this time.
 			if ( CKEDITOR.env.gecko && CKEDITOR.env.version < 10900 && editor.lang.dir == 'rtl' )
@@ -1086,6 +1100,35 @@ CKEDITOR.ELEMENT_MODE_INLINE = 3;
  * @member CKEDITOR.config
  */
 
+ /**
+ * Customizes the {@link CKEDITOR.editor#title human-readable title} of this editor. This title is displayed in
+ * tooltips and impacts on various accessibility aspects, e.g. it is commonly used by screen readers
+ * for distinguishing editor instances and for navigation. Accepted values are string or `false`.
+ *
+ * **Note:** When `config.title` set globally, the same value will be applied to all editor instances
+ * loaded with this config. This may have a critical impact on several accessibility aspects.
+ *
+ * **Note:** Setting `config.title = false` may also have a critical impact on
+ * several accessibility aspects.
+ *
+ * **Note:** Please don't confuse this property with {@link CKEDITOR.editor#name}
+ * which identifies the instance in {@link CKEDITOR#instances} literal.
+ *
+ *		// Set title to 'My WYSIWYG editor.'. The original title of the element (if any)
+ *		// will be restored once the editor instance is destroyed.
+ *		config.title = 'My WYSIWYG editor.';
+ *
+ *		// Don't touch the title. If the element already has a title, it remains untouched.
+ *		// Also if there is no title attribute, nothing new will be added.
+ *		config.title = false;
+ *
+ * @since 4.2
+ * @cfg {String/Boolean} [title=based on editor.name]
+ * @member CKEDITOR.config
+ * @see CKEDITOR.editor.name
+ * @see CKEDITOR.editor.title
+ */
+
 /**
  * Sets listeners on editor's events.
  *
@@ -1121,14 +1164,14 @@ CKEDITOR.ELEMENT_MODE_INLINE = 3;
  */
 
 /**
- * The document that holds the editor contents.
+ * The document that stores the editor contents.
  *
  * * For the framed editor it is equal to the document inside the
- * iframe containing editable element.
+ * iframe containing the editable element.
  * * For the inline editor it is equal to {@link CKEDITOR#document}.
  *
- * The document object is available after the {@link #contentDom} is fired
- * and may be invalidated when {@link #contentDomUnload} event is fired
+ * The document object is available after the {@link #contentDom} event is fired
+ * and may be invalidated when the {@link #contentDomUnload} event is fired
  * (framed editor only).
  *
  *		editor.on( 'contentDom', function() {

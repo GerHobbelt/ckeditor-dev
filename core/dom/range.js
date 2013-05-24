@@ -2048,7 +2048,7 @@ CKEDITOR.dom.range = function( root ) {
 			var sibling;
 
 			do {
-				while ( ( sibling = node[ isMoveToEnd ? 'getNext' : 'getPrevious' ]( nonWhitespaceOrBookmarkEval ) ) ) {
+				while ( ( sibling = node[ isMoveToEnd ? 'getNext' : 'getPrevious' ]( nonIgnoredEval ) ) ) {
 					if ( this.moveToElementEditablePosition( sibling, !isMoveToEnd ) )
 						return true;
 				}

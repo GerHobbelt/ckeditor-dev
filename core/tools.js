@@ -1015,8 +1015,8 @@
 		},
 
 		/**
-		 * Buffer `input` events (or just normal calls)
-		 * and triggers `output` not more often than `minGap`.
+		 * Buffers `input` events (or just normal calls)
+		 * and triggers `output` not more often than `minInterval`.
 		 *
 		 *		var buffer = CKEDITOR.tools.eventsBuffer( 200, function() {
 		 *			console.log( 'foo!' );
@@ -1029,6 +1029,15 @@
 		 *		buffer.input();
 		 *		// nothing logged
 		 *		// ... after 200ms single 'foo!' will be logged
+		 *
+		 * Can be easily used with event:
+		 *
+		 *		var buffer = CKEDITOR.tools.eventsBuffer( 200, function() {
+		 *			console.log( 'foo!' );
+		 *		} );
+		 *
+		 *		editor.on( 'key', buffer.input );
+		 *		// Note: there's no need to bind buffer as a context.
 		 *
 		 * @param {Number} minInterval Minimum interval between `output` calls in milliseconds.
 		 * @param {Function} output Function that will be executed as `output`.

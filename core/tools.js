@@ -331,11 +331,25 @@
 		 *		element.setAttribute( 'title', '<a " b >' );
 		 *		alert( CKEDITOR.tools.htmlEncodeAttr( element.getAttribute( 'title' ) ); // '&gt;a &quot; b &lt;'
 		 *
-		 * @param {String} The attribute's value to be encoded.
-		 * @returns {String} The encode value.
+		 * @param {String} The text to be encoded.
+		 * @returns {String} The encoded text.
 		 */
 		htmlEncodeAttr: function( text ) {
 			return text.replace( /"/g, '&quot;' ).replace( /</g, '&lt;' ).replace( />/g, '&gt;' );
+		},
+
+		/**
+		 * Replace HTML entities previously encoded by
+		 * {@link #htmlEncodeAttr htmlEncodeAttr} back to their plain character
+		 * representation.
+		 *
+		 *		alert( CKEDITOR.tools.htmlDecodeAttr( '&gt;a &quot; b &lt;' ); // '<a " b >'
+		 *
+		 * @param {String} text The text to be decoded.
+		 * @returns {String} The decoded text.
+		 */
+		htmlDecodeAttr: function( text ) {
+			return text.replace( /&quot;/g, '"' ).replace( /&lt;/g, '<' ).replace( /&gt;/g, '>' );
 		},
 
 		/**

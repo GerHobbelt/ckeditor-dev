@@ -1,6 +1,6 @@
 ﻿/**
  * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.html or http://ckeditor.com/license
+ * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
 /**
@@ -12,6 +12,7 @@
 	CKEDITOR.plugins.add( 'undo', {
 		lang: 'af,ar,bg,bn,bs,ca,cs,cy,da,de,el,en,en-au,en-ca,en-gb,eo,es,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
 		icons: 'redo,redo-rtl,undo,undo-rtl', // %REMOVE_LINE_CORE%
+		hidpi: true, // %REMOVE_LINE_CORE%
 		init: function( editor ) {
 			var undoManager = new UndoManager( editor );
 
@@ -24,7 +25,7 @@
 				},
 				state: CKEDITOR.TRISTATE_DISABLED,
 				canUndo: false
-			});
+			} );
 
 			var redoCommand = editor.addCommand( 'redo', {
 				exec: function() {
@@ -35,7 +36,7 @@
 				},
 				state: CKEDITOR.TRISTATE_DISABLED,
 				canUndo: false
-			});
+			} );
 
 			editor.setKeystroke( [
 				[ CKEDITOR.CTRL + 90 /*Z*/, 'undo' ],
@@ -61,22 +62,27 @@
 			// Save snapshots before doing custom changes.
 			editor.on( 'saveSnapshot', function( evt ) {
 				undoManager.save( evt.data && evt.data.contentOnly );
-			});
+			} );
 
 			// Registering keydown on every document recreation.(#3844)
 			editor.on( 'contentDom', function() {
 				editor.editable().on( 'keydown', function( event ) {
-					// Do not capture CTRL hotkeys.
-					if ( !event.data.$.ctrlKey && !event.data.$.metaKey )
-						undoManager.type( event );
-				});
-			});
+					var keystroke = event.data.getKey();
+
+					if ( keystroke == 8 /*Backspace*/ || keystroke == 46 /*Delete*/ )
+						undoManager.type( keystroke, 0 );
+				} );
+
+				editor.editable().on( 'keypress', function( event ) {
+					undoManager.type( event.data.getKey(), 1 );
+				} );
+			} );
 
 			// Always save an undo snapshot - the previous mode might have
 			// changed editor contents.
 			editor.on( 'beforeModeUnload', function() {
 				editor.mode == 'wysiwyg' && undoManager.save( true );
-			});
+			} );
 
 			function toggleUndoManager() {
 				undoManager.enabled = editor.readOnly ? false : editor.mode == 'wysiwyg';
@@ -94,13 +100,13 @@
 					label: editor.lang.undo.undo,
 					command: 'undo',
 					toolbar: 'undo,10'
-				});
+				} );
 
 				editor.ui.addButton( 'Redo', {
 					label: editor.lang.undo.redo,
 					command: 'redo',
 					toolbar: 'undo,20'
-				});
+				} );
 			}
 
 			/**
@@ -134,7 +140,7 @@
 			editor.on( 'updateSnapshot', function() {
 				if ( undoManager.currentImage )
 					undoManager.update();
-			});
+			} );
 
 			/**
 			 * Lock manager to prevent any save/update operations.
@@ -164,7 +170,7 @@
 			 */
 			editor.on( 'unlockSnapshot', undoManager.unlock, undoManager );
 		}
-	});
+	} );
 
 	CKEDITOR.plugins.undo = {};
 
@@ -197,8 +203,7 @@
 	var protectedAttrs = /\b(?:href|src|name)="[^"]*?"/gi;
 
 	Image.prototype = {
-		equals: function( otherImage, contentOnly ) {
-
+		equalsContent: function( otherImage ) {
 			var thisContents = this.contents,
 				otherContents = otherImage.contents;
 
@@ -211,9 +216,10 @@
 			if ( thisContents != otherContents )
 				return false;
 
-			if ( contentOnly )
-				return true;
+			return true;
+		},
 
+		equalsSelection: function( otherImage ) {
 			var bookmarksA = this.bookmarks,
 				bookmarksB = otherImage.bookmarks;
 
@@ -225,9 +231,8 @@
 					var bookmarkA = bookmarksA[ i ],
 						bookmarkB = bookmarksB[ i ];
 
-					if ( bookmarkA.startOffset != bookmarkB.startOffset || bookmarkA.endOffset != bookmarkB.endOffset || !CKEDITOR.tools.arrayCompare( bookmarkA.start, bookmarkB.start ) || !CKEDITOR.tools.arrayCompare( bookmarkA.end, bookmarkB.end ) ) {
+					if ( bookmarkA.startOffset != bookmarkB.startOffset || bookmarkA.endOffset != bookmarkB.endOffset || !CKEDITOR.tools.arrayCompare( bookmarkA.start, bookmarkB.start ) || !CKEDITOR.tools.arrayCompare( bookmarkA.end, bookmarkB.end ) )
 						return false;
-					}
 				}
 			}
 
@@ -252,10 +257,6 @@
 		this.reset();
 	}
 
-	var editingKeyCodes = { /*Backspace*/8:1,/*Delete*/46:1 },
-		modifierKeyCodes = { /*Shift*/16:1,/*Ctrl*/17:1,/*Alt*/18:1 },
-		navigationKeyCodes = { 37:1,38:1,39:1,40:1 }; // Arrows: L, T, R, B
-
 	UndoManager.prototype = {
 		/**
 		 * When `locked` property is not `null` manager is locked, so
@@ -269,37 +270,29 @@
 
 		/**
 		 * Process undo system regard keystrikes.
-		 * @param {CKEDITOR.dom.event} event
+		 * @param {Number} keystroke The key code.
+		 * @param {Boolean} isCharacter If `true` it is character ('a', '1', '&', ...), otherwise it is remove key (delete or backspace).
 		 */
-		type: function( event ) {
-			var keystroke = event && event.data.getKey(),
-				isModifierKey = keystroke in modifierKeyCodes,
-				isEditingKey = keystroke in editingKeyCodes,
-				wasEditingKey = this.lastKeystroke in editingKeyCodes,
-				sameAsLastEditingKey = isEditingKey && keystroke == this.lastKeystroke,
-				// Keystrokes which navigation through contents.
-				isReset = keystroke in navigationKeyCodes,
-				wasReset = this.lastKeystroke in navigationKeyCodes,
+		type: function( keystroke, isCharacter ) {
+			// Create undo snap for every different modifier key.
+			var modifierSnapshot = ( !isCharacter && keystroke != this.lastKeystroke );
 
-				// Keystrokes which just introduce new contents.
-				isContent = ( !isEditingKey && !isReset ),
+			// Create undo snap on the following cases:
+			// 1. Just start to type .
+			// 2. Typing some content after a modifier.
+			// 3. Typing some content after make a visible selection.
+			var startedTyping = !this.typing || ( isCharacter && !this.wasCharacter );
 
-				// Create undo snap for every different modifier key.
-				modifierSnapshot = ( isEditingKey && !sameAsLastEditingKey ),
-				// Create undo snap on the following cases:
-				// 1. Just start to type .
-				// 2. Typing some content after a modifier.
-				// 3. Typing some content after make a visible selection.
-				startedTyping = !( isModifierKey || this.typing ) || ( isContent && ( wasEditingKey || wasReset ) );
+			var editor = this.editor;
 
 			if ( startedTyping || modifierSnapshot ) {
-				var beforeTypeImage = new Image( this.editor ),
+				var beforeTypeImage = new Image( editor ),
 					beforeTypeCount = this.snapshots.length;
 
 				// Use setTimeout, so we give the necessary time to the
 				// browser to insert the character into the DOM.
 				CKEDITOR.tools.setTimeout( function() {
-					var currentSnapshot = this.editor.getSnapshot();
+					var currentSnapshot = editor.getSnapshot();
 
 					// In IE, we need to remove the expando attributes.
 					if ( CKEDITOR.env.ie )
@@ -329,23 +322,32 @@
 			}
 
 			this.lastKeystroke = keystroke;
+			this.wasCharacter = isCharacter;
 
 			// Create undo snap after typed too much (over 25 times).
-			if ( isEditingKey ) {
+			if ( !isCharacter ) {
 				this.typesCount = 0;
 				this.modifiersCount++;
 
 				if ( this.modifiersCount > 25 ) {
 					this.save( false, null, false );
 					this.modifiersCount = 1;
+				} else {
+					setTimeout(function() {
+						editor.fire( 'change' );
+					}, 0 );
 				}
-			} else if ( !isReset ) {
+			} else {
 				this.modifiersCount = 0;
 				this.typesCount++;
 
 				if ( this.typesCount > 25 ) {
 					this.save( false, null, false );
 					this.typesCount = 1;
+				} else {
+					setTimeout(function() {
+						editor.fire( 'change' );
+					}, 0 );
 				}
 			}
 
@@ -415,8 +417,17 @@
 				return false;
 
 			// Check if this is a duplicate. In such case, do nothing.
-			if ( this.currentImage && image.equals( this.currentImage, onContentOnly ) )
-				return false;
+			if ( this.currentImage ) {
+				if ( image.equalsContent( this.currentImage ) ) {
+					if ( onContentOnly )
+						return false;
+
+					if ( image.equalsSelection( this.currentImage ) )
+						return false;
+				} else {
+					this.editor.fire( 'change' );
+				}
+			}
 
 			// Drop future snapshots.
 			snapshots.splice( this.index + 1, snapshots.length - this.index - 1 );
@@ -473,6 +484,8 @@
 			// the original snapshot due to dom change. (#4622)
 			this.update();
 			this.fireChange();
+
+			editor.fire( 'change' );
 		},
 
 		// Get the closest available image.
@@ -485,7 +498,7 @@
 				if ( isUndo ) {
 					for ( i = this.index - 1; i >= 0; i-- ) {
 						image = snapshots[ i ];
-						if ( !currentImage.equals( image, true ) ) {
+						if ( !currentImage.equalsContent( image ) ) {
 							image.index = i;
 							return image;
 						}
@@ -493,7 +506,7 @@
 				} else {
 					for ( i = this.index + 1; i < snapshots.length; i++ ) {
 						image = snapshots[ i ];
-						if ( !currentImage.equals( image, true ) ) {
+						if ( !currentImage.equalsContent( image ) ) {
 							image.index = i;
 							return image;
 						}
@@ -584,7 +597,7 @@
 				// If current editor content matches the tip of snapshot stack,
 				// the stack tip must be updated by unlock, to include any changes made
 				// during this period.
-				var matchedTip = this.currentImage && this.currentImage.equals( imageBefore, true );
+				var matchedTip = this.currentImage && this.currentImage.equalsContent( imageBefore );
 
 				this.locked = { update: matchedTip ? imageBefore : null, level: 1 };
 			}
@@ -608,7 +621,7 @@
 
 					this.locked = null;
 
-					if ( updateImage && !updateImage.equals( new Image( this.editor ), true ) )
+					if ( updateImage && !updateImage.equalsContent( new Image( this.editor ) ) )
 						this.update();
 				}
 			}
@@ -657,4 +670,21 @@
  * @member CKEDITOR.editor
  * @param {CKEDITOR.editor} editor This editor instance.
  * @see CKEDITOR.editor#beforeUndoImage
+ */
+
+/**
+ * Fired when the content of the editor changed.
+ *
+ * Due to performance reasons, it is not verified if the content really changed.
+ * The editor instead watches several editing actions that usually result on
+ * changes. Therefore, this event may be fired when no changes happen on some
+ * cases or even get fired twice.
+ *
+ * If it is important not to get change event too often you should compare the
+ * previous and the current editor content inside the event listener.
+ *
+ * @since 4.2
+ * @event change
+ * @member CKEDITOR.editor
+ * @param {CKEDITOR.editor} editor This editor instance.
  */

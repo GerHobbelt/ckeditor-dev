@@ -6,6 +6,10 @@ CKEditor 4 Changelog
 * [#10281](http://dev.ckeditor.com/ticket/10281): jQuery adapter.
 * [#10042](http://dev.ckeditor.com/ticket/10042): Introduced config.title to change the human-readable title of the editor.
 * [#10370](http://dev.ckeditor.com/ticket/10370): Inconsistency in data events between framed and inline editors.
+* [#9794](http://dev.ckeditor.com/ticket/9794): OnChange event.
+* [#9923](http://dev.ckeditor.com/ticket/9923): HiDPI support in editor UI. HiDPI icons for Moono skin.
+* [#10027](http://dev.ckeditor.com/ticket/10027): Separated list and block indentation.
+* [#8244](http://dev.ckeditor.com/ticket/8244): Use (SHIFT+)TAB to indent and outdent lists.
 
 ## CKEditor 4.1.2
 

@@ -10,3 +10,10 @@
 *.md            text eol=lf
 *.markdown      text eol=lf
 
+*.cgi		text eol=lf
+*.htaccess	text eol=lf
+*.htm		text eol=lf
+
+*.png		-text
+*.gif		-text
+*.jpg		-text

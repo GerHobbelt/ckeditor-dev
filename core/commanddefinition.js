@@ -5,8 +5,8 @@
 
 /**
  * @fileOverview Defines the "virtual" {@link CKEDITOR.commandDefinition} class,
- *		which contains the defintion of a command. This file is for
- *		documentation purposes only.
+ *      which contains the defintion of a command. This file is for
+ *      documentation purposes only.
  */
 
 /**
@@ -20,11 +20,11 @@
 /**
  * The function to be fired when the commend is executed.
  *
- *		editorInstance.addCommand( 'sample', {
- *			exec: function( editor ) {
- *				alert( 'Executing a command for the editor name "' + editor.name + '"!' );
- *			}
- *		} );
+ *      editorInstance.addCommand( 'sample', {
+ *          exec: function( editor ) {
+ *              alert( 'Executing a command for the editor name "' + editor.name + '"!' );
+ *          }
+ *      } );
  *
  * @method exec
  * @param {CKEDITOR.editor} editor The editor within which run the command.
@@ -36,12 +36,12 @@
 /**
  * Whether the command need to be hooked into the redo/undo system.
  *
- *		editorInstance.addCommand( 'alertName', {
- *			exec: function( editor ) {
- *				alert( editor.name );
- *			},
- *			canUndo: false // No support for undo/redo.
- *		} );
+ *      editorInstance.addCommand( 'alertName', {
+ *          exec: function( editor ) {
+ *              alert( editor.name );
+ *          },
+ *          canUndo: false // No support for undo/redo.
+ *      } );
  *
  * @property {Boolean} [canUndo=true]
  */
@@ -52,15 +52,15 @@
  * command itself manually, and that the return value of this command is not to
  * be returned by the {@link #exec} function.
  *
- * 		editorInstance.addCommand( 'loadOptions', {
- * 			exec: function( editor ) {
- * 				// Asynchronous operation below.
- * 				CKEDITOR.ajax.loadXml( 'data.xml', function() {
- * 					editor.fire( 'afterCommandExec' );
- * 				} );
- * 			},
- * 			async: true // The command need some time to complete after exec function returns.
- * 		} );
+ *      editorInstance.addCommand( 'loadOptions', {
+ *          exec: function( editor ) {
+ *              // Asynchronous operation below.
+ *              CKEDITOR.ajax.loadXml( 'data.xml', function() {
+ *                  editor.fire( 'afterCommandExec' );
+ *              } );
+ *          },
+ *          async: true // The command need some time to complete after exec function returns.
+ *      } );
  *
  * @property {Boolean} [async=false]
  */
@@ -68,12 +68,12 @@
 /**
  * Whether the command should give focus to the editor before execution.
  *
- *		editorInstance.addCommand( 'maximize', {
- *				exec: function( editor ) {
- *				// ...
- *			},
- *			editorFocus: false // The command doesn't require focusing the editing document.
- *		} );
+ *      editorInstance.addCommand( 'maximize', {
+ *              exec: function( editor ) {
+ *              // ...
+ *          },
+ *          editorFocus: false // The command doesn't require focusing the editing document.
+ *      } );
  *
  * @property {Boolean} [editorFocus=true]
  * @see CKEDITOR.command#editorFocus
@@ -83,12 +83,12 @@
 /**
  * Whether the command state should be set to {@link CKEDITOR#TRISTATE_DISABLED} on startup.
  *
- *		editorInstance.addCommand( 'unlink', {
- *			exec: function( editor ) {
- *				// ...
- *			},
- *			startDisabled: true // Command is unavailable until selection is inside a link.
- *		} );
+ *      editorInstance.addCommand( 'unlink', {
+ *          exec: function( editor ) {
+ *              // ...
+ *          },
+ *          startDisabled: true // Command is unavailable until selection is inside a link.
+ *      } );
  *
  * @property {Boolean} [startDisabled=false]
  */
@@ -127,12 +127,12 @@
  * The editor modes within which the command can be executed. The execution
  * will have no action if the current mode is not listed in this property.
  *
- *		editorInstance.addCommand( 'link', {
- *			exec: function( editor ) {
- *				// ...
- *			},
- *			modes: { wysiwyg:1 } // Command is available in wysiwyg mode only.
- *		} );
+ *      editorInstance.addCommand( 'link', {
+ *          exec: function( editor ) {
+ *              // ...
+ *          },
+ *          modes: { wysiwyg:1 } // Command is available in wysiwyg mode only.
+ *      } );
  *
  * @property {Object} [modes={ wysiwyg:1 }]
  * @see CKEDITOR.command#modes

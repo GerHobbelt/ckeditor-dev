@@ -13,13 +13,13 @@ MSG_DOWNLOAD_FAILED="It was not possible to download langtool.jar"
 
 function error_exit
 {
-	echo "${PROGNAME}: ${1:-"Unknown Error"}" 1>&2
-	exit 1
+    echo "${PROGNAME}: ${1:-"Unknown Error"}" 1>&2
+    exit 1
 }
 
 function command_exists
 {
-	command -v "$1" > /dev/null 2>&1;
+    command -v "$1" > /dev/null 2>&1;
 }
 
 # Move to the script directory.
@@ -29,19 +29,19 @@ cd $(dirname $0)
 mkdir -p cklangtool/$CKLANGTOOL_VERSION
 cd cklangtool/$CKLANGTOOL_VERSION
 if [ -f langtool.jar ]; then
-	echo "Checking/Updating CKLangTool..."
-	if command_exists curl ; then
-	curl -O -R -z langtool.jar $CKLANGTOOL_URL || echo "$MSG_UPDATE_FAILED"
-	else
-	wget -N $CKLANGTOOL_URL || echo "$MSG_UPDATE_FAILED"
-	fi
+    echo "Checking/Updating CKLangTool..."
+    if command_exists curl ; then
+    curl -O -R -z langtool.jar $CKLANGTOOL_URL || echo "$MSG_UPDATE_FAILED"
+    else
+    wget -N $CKLANGTOOL_URL || echo "$MSG_UPDATE_FAILED"
+    fi
 else
-	echo "Downloading CKLangTool..."
-	if command_exists curl ; then
-	curl -O -R $CKLANGTOOL_URL || error_exit "$MSG_DOWNLOAD_FAILED"
-	else
-	wget -N $CKLANGTOOL_URL || error_exit "$MSG_DOWNLOAD_FAILED"
-	fi
+    echo "Downloading CKLangTool..."
+    if command_exists curl ; then
+    curl -O -R $CKLANGTOOL_URL || error_exit "$MSG_DOWNLOAD_FAILED"
+    else
+    wget -N $CKLANGTOOL_URL || error_exit "$MSG_DOWNLOAD_FAILED"
+    fi
 fi
 cd ../..
 

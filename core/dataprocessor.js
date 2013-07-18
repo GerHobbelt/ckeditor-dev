@@ -5,8 +5,8 @@
 
 /**
  * @fileOverview Defines the "virtual" {@link CKEDITOR.dataProcessor} class, which
- *		defines the basic structure of data processor objects to be
- *		set to {@link CKEDITOR.editor.dataProcessor}.
+ *      defines the basic structure of data processor objects to be
+ *      set to {@link CKEDITOR.editor.dataProcessor}.
  */
 
 /**
@@ -37,9 +37,9 @@
  * it can handle HTML data only. The role of the data processor is transforming
  * the input data into HTML through this function.
  *
- *		// Tranforming BBCode data, having a custom BBCode data processor.
- *		var data = 'This is [b]an example[/b].';
- *		var html = editor.dataProcessor.toHtml( data ); // '<p>This is <b>an example</b>.</p>'
+ *      // Tranforming BBCode data, having a custom BBCode data processor.
+ *      var data = 'This is [b]an example[/b].';
+ *      var html = editor.dataProcessor.toHtml( data ); // '<p>This is <b>an example</b>.</p>'
  *
  * @method toHtml
  * @param {String} data The input data to be transformed.
@@ -58,9 +58,9 @@
  * the HTML data containined by the editor into a specific data format through
  * this function.
  *
- *		// Tranforming into BBCode data, having a custom BBCode data processor.
- *		var html = '<p>This is <b>an example</b>.</p>';
- *		var data = editor.dataProcessor.toDataFormat( html ); // 'This is [b]an example[/b].'
+ *      // Tranforming into BBCode data, having a custom BBCode data processor.
+ *      var html = '<p>This is <b>an example</b>.</p>';
+ *      var data = editor.dataProcessor.toDataFormat( html ); // 'This is [b]an example[/b].'
  *
  * @method toDataFormat
  * @param {String} html The HTML to be transformed.

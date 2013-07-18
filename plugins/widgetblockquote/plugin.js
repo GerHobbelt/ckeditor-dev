@@ -6,11 +6,11 @@
 'use strict';
 
 CKEDITOR.plugins.add( 'widgetblockquote', {
-	requires: 'widget',
-	icons: 'widgetblockquote',
+    requires: 'widget',
+    icons: 'widgetblockquote',
 
-	onLoad: function() {
-		CKEDITOR.addCss( '\
+    onLoad: function() {
+        CKEDITOR.addCss( '\
 			figure.blockquote {\
 				font-style: italic;\
 				font-family: Georgia, Times, "Times New Roman", serif;\
@@ -37,68 +37,68 @@ CKEDITOR.plugins.add( 'widgetblockquote', {
 				margin-bottom: 5px;\
 			}\
 		' );
-	},
+    },
 
-	init: function( editor ) {
-		editor.widgets.add( 'blockquote', {
-			allowedContent: 'figure(blockquote); blockquote; figcaption{display}',
-			widgetTags: 'figure figcaption',
+    init: function( editor ) {
+        editor.widgets.add( 'blockquote', {
+            allowedContent: 'figure(blockquote); blockquote; figcaption{display}',
+            widgetTags: 'figure figcaption',
 
-			button: {
-				label: 'Quote'
-			},
+            button: {
+                label: 'Quote'
+            },
 
-			template: new CKEDITOR.template(
-				'<figure class="blockquote" data-widget="blockquote">' +
-					'<blockquote>{quote}</blockquote>' +
-					'<figcaption data-widget-property="caption" {captionStyle}>{caption}</figcaption>' +
-				'</figure>' ),
+            template: new CKEDITOR.template(
+                '<figure class="blockquote" data-widget="blockquote">' +
+                    '<blockquote>{quote}</blockquote>' +
+                    '<figcaption data-widget-property="caption" {captionStyle}>{caption}</figcaption>' +
+                '</figure>' ),
 
-			defaults: {
-				quote: '<p>Quote</p>',
-				caption: 'Caption',
-				captionStyle: ''
-			},
+            defaults: {
+                quote: '<p>Quote</p>',
+                caption: 'Caption',
+                captionStyle: ''
+            },
 
-			updateData: function() {
-				var captionHidden = this.editables.caption.getStyle( 'display' ) == 'none';
+            updateData: function() {
+                var captionHidden = this.editables.caption.getStyle( 'display' ) == 'none';
 
-				this.data = {
-					quote: this.editables.quote.getHtml(),
-					caption: this.editables.caption.getHtml(),
-					captionHidden: captionHidden,
-					captionStyle: captionHidden ? 'style="display:none"' : ''
-				};
-			},
+                this.data = {
+                    quote: this.editables.quote.getHtml(),
+                    caption: this.editables.caption.getHtml(),
+                    captionHidden: captionHidden,
+                    captionStyle: captionHidden ? 'style="display:none"' : ''
+                };
+            },
 
-			// Returns object with nested elements that are editable part of this widget.
-			// This data-widget-property is replaced with returned object during widget initialization.
-			editables: function() {
-				return {
-					quote: this.element.getElementsByTag( 'blockquote' ).getItem( 0 ),
-					caption: this.element.getElementsByTag( 'figcaption' ).getItem( 0 )
-				};
-			},
+            // Returns object with nested elements that are editable part of this widget.
+            // This data-widget-property is replaced with returned object during widget initialization.
+            editables: function() {
+                return {
+                    quote: this.element.getElementsByTag( 'blockquote' ).getItem( 0 ),
+                    caption: this.element.getElementsByTag( 'figcaption' ).getItem( 0 )
+                };
+            },
 
-			dialog: {
-				title: 'Edit Quote',
-				minHeight: 40,
-				elements: [
-					{
-						id: 'caption',
-						type: 'checkbox',
-						label: 'Hide caption',
-						'default': '',
-						value: "checked",
-						setup: function( widget ) {
-							this.setValue( widget.data.captionHidden );
-						},
-						commit: function( widget ) {
-							widget.parts.caption.setStyle( 'display', this.getValue() ? 'none' : '' );
-						}
-					}
-				]
-			}
-		});
-	}
+            dialog: {
+                title: 'Edit Quote',
+                minHeight: 40,
+                elements: [
+                    {
+                        id: 'caption',
+                        type: 'checkbox',
+                        label: 'Hide caption',
+                        'default': '',
+                        value: "checked",
+                        setup: function( widget ) {
+                            this.setValue( widget.data.captionHidden );
+                        },
+                        commit: function( widget ) {
+                            widget.parts.caption.setStyle( 'display', this.getValue() ? 'none' : '' );
+                        }
+                    }
+                ]
+            }
+        });
+    }
 });

@@ -5,7 +5,7 @@
 
 /**
  * @fileOverview Defines the {@link CKEDITOR.dom} object, which contains DOM
- *		manipulation objects and function.
+ *      manipulation objects and function.
  */
 
 CKEDITOR.dom = {};

@@ -18,11 +18,11 @@ fi ;
 pushd $DIR
 if [ "$1" = "" ]
 then
-	../_thirdparty/jsl/jsl -conf lint.conf -nofilelisting -nologo
+    ../_thirdparty/jsl/jsl -conf lint.conf -nofilelisting -nologo
 else
-	echo Generating $1 ...
-	../_thirdparty/jsl/jsl -conf lint.conf -nofilelisting -nologo > $1
-	echo
-	echo Process completed.
+    echo Generating $1 ...
+    ../_thirdparty/jsl/jsl -conf lint.conf -nofilelisting -nologo > $1
+    echo
+    echo Process completed.
 fi
 popd

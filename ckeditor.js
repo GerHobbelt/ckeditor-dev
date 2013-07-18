@@ -9,20 +9,20 @@ window.CKEDITOR||(window.CKEDITOR=function(){var l=Math.floor(900*Math.random())
 /*jsl:end*/
 
 if ( CKEDITOR.loader )
-	CKEDITOR.loader.load( 'ckeditor' );
+    CKEDITOR.loader.load( 'ckeditor' );
 else {
-	// Set the script name to be loaded by the loader.
-	CKEDITOR._autoLoad = 'ckeditor';
+    // Set the script name to be loaded by the loader.
+    CKEDITOR._autoLoad = 'ckeditor';
 
-	// Include the loader script.
-	if ( document.body && ( !document.readyState || document.readyState == 'complete' ) ) {
-		var script = document.createElement( 'script' );
-		script.type = 'text/javascript';
-		script.src = CKEDITOR.getUrl( 'core/loader.js' );
-		document.body.appendChild( script );
-	} else {
-		document.write( '<script type="text/javascript" src="' + CKEDITOR.getUrl( 'core/loader.js' ) + '"></script>' );
-	}
+    // Include the loader script.
+    if ( document.body && ( !document.readyState || document.readyState == 'complete' ) ) {
+        var script = document.createElement( 'script' );
+        script.type = 'text/javascript';
+        script.src = CKEDITOR.getUrl( 'core/loader.js' );
+        document.body.appendChild( script );
+    } else {
+        document.write( '<script type="text/javascript" src="' + CKEDITOR.getUrl( 'core/loader.js' ) + '"></script>' );
+    }
 }
 
 /**
@@ -32,9 +32,9 @@ else {
  *
  * **Note:** This is a global configuration that applies to all instances.
  *
- *		CKEDITOR.skinName = 'moono';
+ *      CKEDITOR.skinName = 'moono';
  *
- *		CKEDITOR.skinName = 'myskin,/customstuff/myskin/';
+ *      CKEDITOR.skinName = 'myskin,/customstuff/myskin/';
  *
  * @cfg {String} [skinName='moono']
  * @member CKEDITOR

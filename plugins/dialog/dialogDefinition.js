@@ -14,33 +14,33 @@
  * This class is not really part of the API. It just illustrates the properties
  * that developers can use to define and create dialogs.
  *
- *		// There is no constructor for this class, the user just has to define an
- *		// object with the appropriate properties.
+ *      // There is no constructor for this class, the user just has to define an
+ *      // object with the appropriate properties.
  *
- *		CKEDITOR.dialog.add( 'testOnly', function( editor ) {
- *			return {
- *				title:			'Test Dialog',
- *				resizable:		CKEDITOR.DIALOG_RESIZE_BOTH,
- *				minWidth:		500,
- *				minHeight:		400,
- *				contents: [
- *					{
- *						id:			'tab1',
- *						label:		'First Tab',
- *						title:		'First Tab Title',
- *						accessKey:	'Q',
- *						elements: [
- *							{
- *								type:			'text',
- *								label:			'Test Text 1',
- *								id:				'testText1',
- *								'default':		'hello world!'
- *							}
- *						]
- *					}
- *				]
- *			};
- *		} );
+ *      CKEDITOR.dialog.add( 'testOnly', function( editor ) {
+ *          return {
+ *              title:          'Test Dialog',
+ *              resizable:      CKEDITOR.DIALOG_RESIZE_BOTH,
+ *              minWidth:       500,
+ *              minHeight:      400,
+ *              contents: [
+ *                  {
+ *                      id:         'tab1',
+ *                      label:      'First Tab',
+ *                      title:      'First Tab Title',
+ *                      accessKey:  'Q',
+ *                      elements: [
+ *                          {
+ *                              type:           'text',
+ *                              label:          'Test Text 1',
+ *                              id:             'testText1',
+ *                              'default':      'hello world!'
+ *                          }
+ *                      ]
+ *                  }
+ *              ]
+ *          };
+ *      } );
  *
  * @class CKEDITOR.dialog.definition
  */
@@ -155,7 +155,7 @@
 /**
  * The CTRL hotkey for switching to the tab.
  *
- *		contentDefinition.accessKey = 'Q'; // Switch to this page when CTRL-Q is pressed.
+ *      contentDefinition.accessKey = 'Q'; // Switch to this page when CTRL-Q is pressed.
  *
  * @property {String} accessKey
  */
@@ -266,30 +266,30 @@
  *
  * Once the dialog is opened, the created element becomes a {@link CKEDITOR.ui.dialog.hbox} object and can be accessed with {@link CKEDITOR.dialog#getContentElement}.
  *
- *		// There is no constructor for this class, the user just has to define an
- *		// object with the appropriate properties.
+ *      // There is no constructor for this class, the user just has to define an
+ *      // object with the appropriate properties.
  *
- *		// Example:
- *		{
- *			type: 'hbox',
- *			widths: [ '25%', '25%', '50%' ],
- *			children: [
- *				{
- *					type: 'text',
- *					id: 'id1',
- *					width: '40px',
- *				},
- *				{
- *					type: 'text',
- *					id: 'id2',
- *					width: '40px',
- *				},
- *				{
- *					type: 'text',
- *					id: 'id3'
- *				}
- *			]
- *		}
+ *      // Example:
+ *      {
+ *          type: 'hbox',
+ *          widths: [ '25%', '25%', '50%' ],
+ *          children: [
+ *              {
+ *                  type: 'text',
+ *                  id: 'id1',
+ *                  width: '40px',
+ *              },
+ *              {
+ *                  type: 'text',
+ *                  id: 'id2',
+ *                  width: '40px',
+ *              },
+ *              {
+ *                  type: 'text',
+ *                  id: 'id3'
+ *              }
+ *          ]
+ *      }
  *
  * @class CKEDITOR.dialog.definition.hbox
  * @extends CKEDITOR.dialog.definition.uiElement
@@ -342,32 +342,32 @@
  * Once the dialog is opened, the created element becomes a {@link CKEDITOR.ui.dialog.vbox} object and can
  * be accessed with {@link CKEDITOR.dialog#getContentElement}.
  *
- *		// There is no constructor for this class, the user just has to define an
- *		// object with the appropriate properties.
+ *      // There is no constructor for this class, the user just has to define an
+ *      // object with the appropriate properties.
  *
- *		// Example:
- *		{
- *			type: 'vbox',
- *			align: 'right',
- *			width: '200px',
- *			children: [
- *				{
- *					type: 'text',
- *					id: 'age',
- *					label: 'Age'
- *				},
- *				{
- *					type: 'text',
- *					id: 'sex',
- *					label: 'Sex'
- *				},
- *				{
- *					type: 'text',
- *					id: 'nationality',
- *					label: 'Nationality'
- *				}
- *			]
- *		}
+ *      // Example:
+ *      {
+ *          type: 'vbox',
+ *          align: 'right',
+ *          width: '200px',
+ *          children: [
+ *              {
+ *                  type: 'text',
+ *                  id: 'age',
+ *                  label: 'Age'
+ *              },
+ *              {
+ *                  type: 'text',
+ *                  id: 'sex',
+ *                  label: 'Sex'
+ *              },
+ *              {
+ *                  type: 'text',
+ *                  id: 'nationality',
+ *                  label: 'Nationality'
+ *              }
+ *          ]
+ *      }
  *
  * @class CKEDITOR.dialog.definition.vbox
  * @extends CKEDITOR.dialog.definition.uiElement
@@ -431,10 +431,10 @@
 /**
  * The label of the UI element.
  *
- *		{
- *			type: 'text',
- *			label: 'My Label'
- *		}
+ *      {
+ *          type: 'text',
+ *          label: 'My Label'
+ *      }
  *
  * @property {String} label
  */
@@ -443,11 +443,11 @@
  * (Optional) Specify the layout of the label. Set to `'horizontal'` for horizontal layout.
  * The default layout is vertical.
  *
- *		{
- *			type: 'text',
- *			label: 'My Label',
- *			labelLayout: 'horizontal'
- *		}
+ *      {
+ *          type: 'text',
+ *          label: 'My Label',
+ *          labelLayout: 'horizontal'
+ *      }
  *
  * @property {String} labelLayout
  */
@@ -456,12 +456,12 @@
  * (Optional) Applies only to horizontal layouts: a two elements array of lengths to specify the widths of the
  * label and the content element. See also {@link CKEDITOR.dialog.definition.labeledElement#labelLayout}.
  *
- *		{
- *			type: 'text',
- *			label: 'My Label',
- *			labelLayout: 'horizontal',
- *			widths: [100, 200]
- *		}
+ *      {
+ *          type: 'text',
+ *          label: 'My Label',
+ *          labelLayout: 'horizontal',
+ *          widths: [100, 200]
+ *      }
  *
  * @property {Array} widths
  */
@@ -469,11 +469,11 @@
 /**
  * Specify the inline style of the uiElement label.
  *
- *		{
- *			type: 'text',
- *			label: 'My Label',
- *			labelStyle: 'color: red'
- *		}
+ *      {
+ *          type: 'text',
+ *          label: 'My Label',
+ *          labelStyle: 'color: red'
+ *      }
  *
  * @property {String} labelStyle
  */
@@ -482,11 +482,11 @@
 /**
  * Specify the inline style of the input element.
  *
- *		{
- *			type: 'text',
- *			label: 'My Label',
- *			inputStyle: 'text-align: center'
- *		}
+ *      {
+ *          type: 'text',
+ *          label: 'My Label',
+ *          inputStyle: 'text-align: center'
+ *      }
  *
  * @since 3.6.1
  * @property {String} inputStyle
@@ -495,11 +495,11 @@
 /**
  * Specify the inline style of the input element container.
  *
- *		{
- *			type: 'text',
- *			label: 'My Label',
- *			controlStyle: 'width: 3em'
- *		}
+ *      {
+ *          type: 'text',
+ *          label: 'My Label',
+ *          controlStyle: 'width: 3em'
+ *      }
  *
  * @since 3.6.1
  * @property {String} controlStyle
@@ -518,20 +518,20 @@
  *
  * For a complete example of dialog definition, please check {@link CKEDITOR.dialog#add}.
  *
- *		// There is no constructor for this class, the user just has to define an
- *		// object with the appropriate properties.
+ *      // There is no constructor for this class, the user just has to define an
+ *      // object with the appropriate properties.
  *
- *		// Example:
- *		{
- *			type: 'button',
- *			id: 'buttonId',
- *			label: 'Click me',
- *			title: 'My title',
- *			onClick: function() {
- *				// this = CKEDITOR.ui.dialog.button
- *				alert( 'Clicked: ' + this.id );
- *			}
- *		}
+ *      // Example:
+ *      {
+ *          type: 'button',
+ *          id: 'buttonId',
+ *          label: 'Click me',
+ *          title: 'My title',
+ *          onClick: function() {
+ *              // this = CKEDITOR.ui.dialog.button
+ *              alert( 'Clicked: ' + this.id );
+ *          }
+ *      }
  *
  * @class CKEDITOR.dialog.definition.button
  * @extends CKEDITOR.dialog.definition.uiElement
@@ -561,20 +561,20 @@
  *
  * For a complete example of dialog definition, please check {@link CKEDITOR.dialog#add}.
  *
- *		// There is no constructor for this class, the user just has to define an
- *		// object with the appropriate properties.
+ *      // There is no constructor for this class, the user just has to define an
+ *      // object with the appropriate properties.
  *
- *		// Example:
- *		{
- *			type: 'checkbox',
- *			id: 'agree',
- *			label: 'I agree',
- *			'default': 'checked',
- *			onClick: function() {
- *				// this = CKEDITOR.ui.dialog.checkbox
- *				alert( 'Checked: ' + this.getValue() );
- *			}
- *		}
+ *      // Example:
+ *      {
+ *          type: 'checkbox',
+ *          id: 'agree',
+ *          label: 'I agree',
+ *          'default': 'checked',
+ *          onClick: function() {
+ *              // this = CKEDITOR.ui.dialog.checkbox
+ *              alert( 'Checked: ' + this.getValue() );
+ *          }
+ *      }
  *
  * @class CKEDITOR.dialog.definition.checkbox
  * @extends CKEDITOR.dialog.definition.uiElement
@@ -611,27 +611,27 @@
  *
  * For a complete example of dialog definition, please check {@link CKEDITOR.dialog#add}.
  *
- *		// There is no constructor for this class, the user just has to define an
- *		// object with the appropriate properties.
+ *      // There is no constructor for this class, the user just has to define an
+ *      // object with the appropriate properties.
  *
- *		// Example:
- *		{
- *			type: 'file',
- *			id: 'upload',
- *			label: 'Select file from your computer',
- *			size: 38
- *		},
- *		{
- *			type: 'fileButton',
- *			id: 'fileId',
- *			label: 'Upload file',
- *			'for': [ 'tab1', 'upload' ],
- *			filebrowser: {
- *				onSelect: function( fileUrl, data ) {
- *					alert( 'Successfully uploaded: ' + fileUrl );
- *				}
- *			}
- *		}
+ *      // Example:
+ *      {
+ *          type: 'file',
+ *          id: 'upload',
+ *          label: 'Select file from your computer',
+ *          size: 38
+ *      },
+ *      {
+ *          type: 'fileButton',
+ *          id: 'fileId',
+ *          label: 'Upload file',
+ *          'for': [ 'tab1', 'upload' ],
+ *          filebrowser: {
+ *              onSelect: function( fileUrl, data ) {
+ *                  alert( 'Successfully uploaded: ' + fileUrl );
+ *              }
+ *          }
+ *      }
  *
  * @class CKEDITOR.dialog.definition.file
  * @extends CKEDITOR.dialog.definition.labeledElement
@@ -689,15 +689,15 @@
  * The instruction for CKEditor how to deal with file upload.
  * By default, the file and fileButton elements will not work "as expected" if this attribute is not set.
  *
- *		// Update field with id 'txtUrl' in the 'tab1' tab when file is uploaded.
- *		filebrowser: 'tab1:txtUrl'
+ *      // Update field with id 'txtUrl' in the 'tab1' tab when file is uploaded.
+ *      filebrowser: 'tab1:txtUrl'
  *
- *		// Call custom onSelect function when file is successfully uploaded.
- *		filebrowser: {
- *			onSelect: function( fileUrl, data ) {
- *				alert( 'Successfully uploaded: ' + fileUrl );
- *			}
- *		}
+ *      // Call custom onSelect function when file is successfully uploaded.
+ *      filebrowser: {
+ *          onSelect: function( fileUrl, data ) {
+ *              alert( 'Successfully uploaded: ' + fileUrl );
+ *          }
+ *      }
  *
  * @property {String} filebrowser/Object
  */
@@ -705,7 +705,7 @@
 /**
  * An array that contains pageId and elementId of the file upload input element for which this button is created.
  *
- *		[ pageId, elementId ]
+ *      [ pageId, elementId ]
  *
  * @property {String} for
  */
@@ -724,44 +724,44 @@
  * For a complete example of dialog definition, please check {@link CKEDITOR.dialog#add}.
  * To access HTML elements use {@link CKEDITOR.dom.document#getById}.
  *
- *		// There is no constructor for this class, the user just has to define an
- *		// object with the appropriate properties.
+ *      // There is no constructor for this class, the user just has to define an
+ *      // object with the appropriate properties.
  *
- *		// Example 1:
- *		{
- *			type: 'html',
- *			html: '<h3>This is some sample HTML content.</h3>'
- *		}
+ *      // Example 1:
+ *      {
+ *          type: 'html',
+ *          html: '<h3>This is some sample HTML content.</h3>'
+ *      }
  *
- *		// Example 2:
- *		// Complete sample with document.getById() call when the "Ok" button is clicked.
- *		var dialogDefinition = {
- *			title: 'Sample dialog',
- *			minWidth: 300,
- *			minHeight: 200,
- *			onOk: function() {
- *				// "this" is now a CKEDITOR.dialog object.
- *				var document = this.getElement().getDocument();
- *				// document = CKEDITOR.dom.document
- *				var element = <b>document.getById( 'myDiv' );</b>
- *				if ( element )
- *					alert( element.getHtml() );
- *			},
- *			contents: [
- *				{
- *					id: 'tab1',
- *					label: '',
- *					title: '',
- *					elements: [
- *						{
- *							type: 'html',
- *							html: '<div id="myDiv">Sample <b>text</b>.</div><div id="otherId">Another div.</div>'
- *						}
- *					]
- *				}
- *			],
- *			buttons: [ CKEDITOR.dialog.cancelButton, CKEDITOR.dialog.okButton ]
- *		};
+ *      // Example 2:
+ *      // Complete sample with document.getById() call when the "Ok" button is clicked.
+ *      var dialogDefinition = {
+ *          title: 'Sample dialog',
+ *          minWidth: 300,
+ *          minHeight: 200,
+ *          onOk: function() {
+ *              // "this" is now a CKEDITOR.dialog object.
+ *              var document = this.getElement().getDocument();
+ *              // document = CKEDITOR.dom.document
+ *              var element = <b>document.getById( 'myDiv' );</b>
+ *              if ( element )
+ *                  alert( element.getHtml() );
+ *          },
+ *          contents: [
+ *              {
+ *                  id: 'tab1',
+ *                  label: '',
+ *                  title: '',
+ *                  elements: [
+ *                      {
+ *                          type: 'html',
+ *                          html: '<div id="myDiv">Sample <b>text</b>.</div><div id="otherId">Another div.</div>'
+ *                      }
+ *                  ]
+ *              }
+ *          ],
+ *          buttons: [ CKEDITOR.dialog.cancelButton, CKEDITOR.dialog.okButton ]
+ *      };
  *
  * @class CKEDITOR.dialog.definition.html
  * @extends CKEDITOR.dialog.definition.uiElement
@@ -786,22 +786,22 @@
  *
  * For a complete example of dialog definition, please check {@link CKEDITOR.dialog#add}.
  *
- *		// There is no constructor for this class, the user just has to define an
- *		// object with the appropriate properties.
+ *      // There is no constructor for this class, the user just has to define an
+ *      // object with the appropriate properties.
  *
- *		// Example:
- *		{
- *			type: 'radio',
- *			id: 'country',
- *			label: 'Which country is bigger',
- *			items: [ [ 'France', 'FR' ], [ 'Germany', 'DE' ] ],
- *			style: 'color: green',
- *			'default': 'DE',
- *			onClick: function() {
- *				// this = CKEDITOR.ui.dialog.radio
- *				alert( 'Current value: ' + this.getValue() );
- *			}
- *		}
+ *      // Example:
+ *      {
+ *          type: 'radio',
+ *          id: 'country',
+ *          label: 'Which country is bigger',
+ *          items: [ [ 'France', 'FR' ], [ 'Germany', 'DE' ] ],
+ *          style: 'color: green',
+ *          'default': 'DE',
+ *          onClick: function() {
+ *              // this = CKEDITOR.ui.dialog.radio
+ *              alert( 'Current value: ' + this.getValue() );
+ *          }
+ *      }
  *
  * @class CKEDITOR.dialog.definition.radio
  * @extends CKEDITOR.dialog.definition.labeledElement
@@ -839,21 +839,21 @@
  *
  * For a complete example of dialog definition, please check {@link CKEDITOR.dialog#add}.
  *
- *		// There is no constructor for this class, the user just has to define an
- *		// object with the appropriate properties.
+ *      // There is no constructor for this class, the user just has to define an
+ *      // object with the appropriate properties.
  *
- *		// Example:
- *		{
- *			type: 'select',
- *			id: 'sport',
- *			label: 'Select your favourite sport',
- *			items: [ [ 'Basketball' ], [ 'Baseball' ], [ 'Hockey' ], [ 'Football' ] ],
- *			'default': 'Football',
- *			onChange: function( api ) {
- *				// this = CKEDITOR.ui.dialog.select
- *				alert( 'Current value: ' + this.getValue() );
- *			}
- *		}
+ *      // Example:
+ *      {
+ *          type: 'select',
+ *          id: 'sport',
+ *          label: 'Select your favourite sport',
+ *          items: [ [ 'Basketball' ], [ 'Baseball' ], [ 'Hockey' ], [ 'Football' ] ],
+ *          'default': 'Football',
+ *          onChange: function( api ) {
+ *              // this = CKEDITOR.ui.dialog.select
+ *              alert( 'Current value: ' + this.getValue() );
+ *          }
+ *      }
  *
  * @class CKEDITOR.dialog.definition.select
  * @extends CKEDITOR.dialog.definition.labeledElement
@@ -903,21 +903,21 @@
  *
  * For a complete example of dialog definition, please check {@link CKEDITOR.dialog#add}.
  *
- *		// There is no constructor for this class, the user just has to define an
- *		// object with the appropriate properties.
+ *      // There is no constructor for this class, the user just has to define an
+ *      // object with the appropriate properties.
  *
- *		{
- *			type: 'text',
- *			id: 'name',
- *			label: 'Your name',
- *			'default': '',
- *			validate: function() {
- *				if ( !this.getValue() ) {
- *					api.openMsgDialog( '', 'Name cannot be empty.' );
- *					return false;
- *				}
- *			}
- *		}
+ *      {
+ *          type: 'text',
+ *          id: 'name',
+ *          label: 'Your name',
+ *          'default': '',
+ *          validate: function() {
+ *              if ( !this.getValue() ) {
+ *                  api.openMsgDialog( '', 'Name cannot be empty.' );
+ *                  return false;
+ *              }
+ *          }
+ *      }
  *
  * @class CKEDITOR.dialog.definition.textInput
  * @extends CKEDITOR.dialog.definition.labeledElement
@@ -960,22 +960,22 @@
  *
  * For a complete example of dialog definition, please check {@link CKEDITOR.dialog#add}.
  *
-* 		// There is no constructor for this class, the user just has to define an
-* 		// object with the appropriate properties.
+*       // There is no constructor for this class, the user just has to define an
+*       // object with the appropriate properties.
 *
-* 		// Example:
-* 		{
-* 			type: 'textarea',
-* 			id: 'message',
-* 			label: 'Your comment',
-* 			'default': '',
-* 			validate: function() {
-* 				if ( this.getValue().length < 5 ) {
-* 					api.openMsgDialog( 'The comment is too short.' );
-* 					return false;
-* 				}
-* 			}
-* 		}
+*       // Example:
+*       {
+*           type: 'textarea',
+*           id: 'message',
+*           label: 'Your comment',
+*           'default': '',
+*           validate: function() {
+*               if ( this.getValue().length < 5 ) {
+*                   api.openMsgDialog( 'The comment is too short.' );
+*                   return false;
+*               }
+*           }
+*       }
  *
  * @class CKEDITOR.dialog.definition.textarea
  * @extends CKEDITOR.dialog.definition.labeledElement

@@ -23,10 +23,10 @@ java -jar cklangtool/$CKLANGTOOL_VERSION/langtool.jar update -c=config -f=meta -
 # Update meta files for plugins
 for i in "${plugins[@]}"
 do
-	java -jar cklangtool/$CKLANGTOOL_VERSION/langtool.jar update -c=config -f=meta -m=meta/ckeditor.plugin-$i/meta.txt ../../plugins/$i/lang/ $TARGETDIR/ckeditor.plugin-$i/
+    java -jar cklangtool/$CKLANGTOOL_VERSION/langtool.jar update -c=config -f=meta -m=meta/ckeditor.plugin-$i/meta.txt ../../plugins/$i/lang/ $TARGETDIR/ckeditor.plugin-$i/
 done
 # Update meta files for language files used by plugins' dialogs
 for i in "${plugins_dialogs[@]}"
 do
-	java -jar cklangtool/$CKLANGTOOL_VERSION/langtool.jar update -c=config -f=meta -m=meta/ckeditor.plugin-$i-dialogs/meta.txt ../../plugins/$i/dialogs/lang/ $TARGETDIR/ckeditor.plugin-$i-dialogs/
+    java -jar cklangtool/$CKLANGTOOL_VERSION/langtool.jar update -c=config -f=meta -m=meta/ckeditor.plugin-$i-dialogs/meta.txt ../../plugins/$i/dialogs/lang/ $TARGETDIR/ckeditor.plugin-$i-dialogs/
 done

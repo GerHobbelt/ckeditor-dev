@@ -17,11 +17,11 @@ implemented as they make higher quality skins.
 
 For this skin, the following tasks are achieved in this file:
 
-	1. Register the skin.
-	2. Register browser specific skin files.
-	3. Define the "Chameleon" feature.
-	4. Register the skin icons, to have them used on the development version of
-	  the skin.
+    1. Register the skin.
+    2. Register browser specific skin files.
+    3. Define the "Chameleon" feature.
+    4. Register the skin icons, to have them used on the development version of
+      the skin.
 */
 
 // 1. Register the skin
@@ -82,136 +82,136 @@ CKEDITOR.skin.ua_dialog = 'ie,iequirks,ie7,ie8,opera';
 // The "$color" placeholder can be used in the returned string. It'll be
 // replaced with the desired color.
 CKEDITOR.skin.chameleon = function( editor, part ) {
-	// Use this function just to avoid having to repeat all these rules on
-	// several places of our template.
-	function getLinearBackground( definition ) {
-		return 'background:-moz-linear-gradient(' + definition + ');' + // FF3.6+
-			'background:-webkit-linear-gradient(' + definition + ');' + // Chrome10+, Safari5.1+
-			'background:-o-linear-gradient(' + definition + ');' + // Opera 11.10+
-			'background:-ms-linear-gradient(' + definition + ');' + // IE10+
-			'background:linear-gradient(' + definition + ');'; // W3C
-	}
+    // Use this function just to avoid having to repeat all these rules on
+    // several places of our template.
+    function getLinearBackground( definition ) {
+        return 'background:-moz-linear-gradient(' + definition + ');' + // FF3.6+
+            'background:-webkit-linear-gradient(' + definition + ');' + // Chrome10+, Safari5.1+
+            'background:-o-linear-gradient(' + definition + ');' + // Opera 11.10+
+            'background:-ms-linear-gradient(' + definition + ');' + // IE10+
+            'background:linear-gradient(' + definition + ');'; // W3C
+    }
 
-	var css;
+    var css;
 
-	// The Chameleon feature is available for each CKEditor instance,
-	// independently. Because of this, we need to prefix all CSS selectors with
-	// the unique class name of the instance.
-	//
-	// CKEditor instances have a unique ID, which is used as class name into
-	// the outer container of the editor UI (e.g. ".cke_1").
-	var cssId = '.' + editor.id;
+    // The Chameleon feature is available for each CKEditor instance,
+    // independently. Because of this, we need to prefix all CSS selectors with
+    // the unique class name of the instance.
+    //
+    // CKEditor instances have a unique ID, which is used as class name into
+    // the outer container of the editor UI (e.g. ".cke_1").
+    var cssId = '.' + editor.id;
 
-	// There are two main "parts" that need the be touched by the Chameleon
-	// feature: "editor" and "panel".
-	//
-	// This is the main UI part, representing everything that is loaded in the
-	// page that includes the editor instance. Note that the dialog styles are
-	// also taken in consideration here.
-	if ( part == 'editor' ) {
-		css = cssId + ' .cke_inner,' +
-			cssId + ' .cke_dialog_tab' +
-			'{' +
-		    'background-color:$color;' +
-				'background:-webkit-gradient(linear,0 -15,0 40,from(#fff),to($color));' +
-				getLinearBackground( 'top,#fff -15px,$color 40px' ) +
-			'}' +
+    // There are two main "parts" that need the be touched by the Chameleon
+    // feature: "editor" and "panel".
+    //
+    // This is the main UI part, representing everything that is loaded in the
+    // page that includes the editor instance. Note that the dialog styles are
+    // also taken in consideration here.
+    if ( part == 'editor' ) {
+        css = cssId + ' .cke_inner,' +
+            cssId + ' .cke_dialog_tab' +
+            '{' +
+            'background-color:$color;' +
+                'background:-webkit-gradient(linear,0 -15,0 40,from(#fff),to($color));' +
+                getLinearBackground( 'top,#fff -15px,$color 40px' ) +
+            '}' +
 
-			cssId + ' .cke_toolgroup' +
-			'{' +
-				'background:-webkit-gradient(linear,0 0,0 100,from(#fff),to($color));' +
-				getLinearBackground( 'top,#fff,$color 100px' ) +
-			'}' +
+            cssId + ' .cke_toolgroup' +
+            '{' +
+                'background:-webkit-gradient(linear,0 0,0 100,from(#fff),to($color));' +
+                getLinearBackground( 'top,#fff,$color 100px' ) +
+            '}' +
 
-			cssId + ' .cke_combo_button' +
-			'{' +
-				'background:-webkit-gradient(linear, left bottom, left -100, from(#fff), to($color));' +
-				getLinearBackground( 'bottom,#fff,$color 100px' ) +
-			'}' +
+            cssId + ' .cke_combo_button' +
+            '{' +
+                'background:-webkit-gradient(linear, left bottom, left -100, from(#fff), to($color));' +
+                getLinearBackground( 'bottom,#fff,$color 100px' ) +
+            '}' +
 
-			cssId + ' .cke_dialog_contents,' +
-			cssId + ' .cke_dialog_footer' +
-			'{' +
-			'background-color:$color !important;' +
-			'}' +
+            cssId + ' .cke_dialog_contents,' +
+            cssId + ' .cke_dialog_footer' +
+            '{' +
+            'background-color:$color !important;' +
+            '}' +
 
-			cssId + ' .cke_dialog_tab:hover,' +
-			cssId + ' .cke_dialog_tab:active,' +
-			cssId + ' .cke_dialog_tab:focus,' +
-			cssId + ' .cke_dialog_tab_selected' +
-			'{' +
-			'background-color:$color;' +
-			'background-image:none;' +
-			'}' +
+            cssId + ' .cke_dialog_tab:hover,' +
+            cssId + ' .cke_dialog_tab:active,' +
+            cssId + ' .cke_dialog_tab:focus,' +
+            cssId + ' .cke_dialog_tab_selected' +
+            '{' +
+            'background-color:$color;' +
+            'background-image:none;' +
+            '}' +
 
-			'';
+            '';
 
 
-	// The "panel" part is necessary because it represents contents of panels
-	// used in the editor, like context-menus or the toolbar combos panels.
-	// Those are loaded inside iframes, so this template is used there. Because
-	// of this iframe isolation, we don't need to specify the editor id class
-	// name in the rules selectors.
-	//
-	// The menu.css rules are usually the ones to be overriden here, while all
-	// the rest is handled by the above "editor" part.
-	} else if ( part == 'panel' ) {
-		css = '.cke_menubutton_icon' +
-			'{' +
-				'background-color:$color !important;' +
-				'border-color:$color !important;' +
-			'}' +
+    // The "panel" part is necessary because it represents contents of panels
+    // used in the editor, like context-menus or the toolbar combos panels.
+    // Those are loaded inside iframes, so this template is used there. Because
+    // of this iframe isolation, we don't need to specify the editor id class
+    // name in the rules selectors.
+    //
+    // The menu.css rules are usually the ones to be overriden here, while all
+    // the rest is handled by the above "editor" part.
+    } else if ( part == 'panel' ) {
+        css = '.cke_menubutton_icon' +
+            '{' +
+                'background-color:$color !important;' +
+                'border-color:$color !important;' +
+            '}' +
 
-			'.cke_menubutton:hover .cke_menubutton_icon,' +
-			'.cke_menubutton:focus .cke_menubutton_icon,' +
-			'.cke_menubutton:active .cke_menubutton_icon' +
-			'{' +
-				'background-color:$color !important;' +
-				'border-color:$color !important;' +
-			'}' +
+            '.cke_menubutton:hover .cke_menubutton_icon,' +
+            '.cke_menubutton:focus .cke_menubutton_icon,' +
+            '.cke_menubutton:active .cke_menubutton_icon' +
+            '{' +
+                'background-color:$color !important;' +
+                'border-color:$color !important;' +
+            '}' +
 
-			'.cke_menubutton:hover .cke_menubutton_label,' +
-			'.cke_menubutton:focus .cke_menubutton_label,' +
-			'.cke_menubutton:active .cke_menubutton_label' +
-			'{' +
-				'background-color:$color !important;' +
-			'}' +
+            '.cke_menubutton:hover .cke_menubutton_label,' +
+            '.cke_menubutton:focus .cke_menubutton_label,' +
+            '.cke_menubutton:active .cke_menubutton_label' +
+            '{' +
+                'background-color:$color !important;' +
+            '}' +
 
-			'.cke_menubutton_disabled:hover .cke_menubutton_label,' +
-			'.cke_menubutton_disabled:focus .cke_menubutton_label,' +
-			'.cke_menubutton_disabled:active .cke_menubutton_label' +
-			'{' +
-				'background-color: transparent !important;' +
-			'}' +
+            '.cke_menubutton_disabled:hover .cke_menubutton_label,' +
+            '.cke_menubutton_disabled:focus .cke_menubutton_label,' +
+            '.cke_menubutton_disabled:active .cke_menubutton_label' +
+            '{' +
+                'background-color: transparent !important;' +
+            '}' +
 
-			'.cke_menubutton_disabled:hover .cke_menubutton_icon,' +
-			'.cke_menubutton_disabled:focus .cke_menubutton_icon,' +
-			'.cke_menubutton_disabled:active .cke_menubutton_icon' +
-			'{' +
-				'background-color:$color !important;' +
-				'border-color:$color !important;' +
-			'}' +
+            '.cke_menubutton_disabled:hover .cke_menubutton_icon,' +
+            '.cke_menubutton_disabled:focus .cke_menubutton_icon,' +
+            '.cke_menubutton_disabled:active .cke_menubutton_icon' +
+            '{' +
+                'background-color:$color !important;' +
+                'border-color:$color !important;' +
+            '}' +
 
-			'.cke_menubutton_disabled .cke_menubutton_icon' +
-			'{' +
-				'background-color:$color !important;' +
-				'border-color:$color !important;' +
-			'}' +
+            '.cke_menubutton_disabled .cke_menubutton_icon' +
+            '{' +
+                'background-color:$color !important;' +
+                'border-color:$color !important;' +
+            '}' +
 
-			'.cke_menuseparator' +
-			'{' +
-				'background-color:$color !important;' +
-			'}' +
+            '.cke_menuseparator' +
+            '{' +
+                'background-color:$color !important;' +
+            '}' +
 
-			'.cke_menubutton:hover,' +
-			'.cke_menubutton:focus,' +
-			'.cke_menubutton:active' +
-			'{' +
-				'background-color:$color !important;' +
-			'}';
-	}
+            '.cke_menubutton:hover,' +
+            '.cke_menubutton:focus,' +
+            '.cke_menubutton:active' +
+            '{' +
+                'background-color:$color !important;' +
+            '}';
+    }
 
-	return css;
+    return css;
 };
 
 // %REMOVE_START%
@@ -234,27 +234,27 @@ CKEDITOR.skin.chameleon = function( editor, part ) {
 // Actually, it is not required to provide icons at all.
 
 (function() {
-	// The available icons. This list must match the file names (without
-	// extension) available inside the "icons" folder.
-	var icons = ( 'about,anchor-rtl,anchor,bgcolor,bidiltr,bidirtl,blockquote,' +
-		'bold,bulletedlist-rtl,bulletedlist,button,checkbox,copy-rtl,copy,' +
-		'creatediv,cut-rtl,cut,docprops-rtl,docprops,find-rtl,find,flash,form,' +
-		'hiddenfield,horizontalrule,icons,iframe,image,imagebutton,indent-rtl,' +
-		'indent,italic,justifyblock,justifycenter,justifyleft,justifyright,' +
-		'link,maximize,newpage-rtl,newpage,numberedlist-rtl,numberedlist,' +
-		'outdent-rtl,outdent,pagebreak-rtl,pagebreak,paste-rtl,paste,' +
-		'pastefromword-rtl,pastefromword,pastetext-rtl,pastetext,placeholder,preview-rtl,' +
-		'preview,print,radio,redo-rtl,redo,removeformat,replace,save,scayt,' +
-		'select-rtl,select,selectall,showblocks-rtl,showblocks,smiley,' +
-		'source-rtl,source,specialchar,spellchecker,strike,subscript,' +
-		'superscript,table,templates-rtl,templates,textarea-rtl,textarea,' +
-		'textcolor,textfield,underline,undo-rtl,undo,unlink' ).split( ',' );
+    // The available icons. This list must match the file names (without
+    // extension) available inside the "icons" folder.
+    var icons = ( 'about,anchor-rtl,anchor,bgcolor,bidiltr,bidirtl,blockquote,' +
+        'bold,bulletedlist-rtl,bulletedlist,button,checkbox,copy-rtl,copy,' +
+        'creatediv,cut-rtl,cut,docprops-rtl,docprops,find-rtl,find,flash,form,' +
+        'hiddenfield,horizontalrule,icons,iframe,image,imagebutton,indent-rtl,' +
+        'indent,italic,justifyblock,justifycenter,justifyleft,justifyright,' +
+        'link,maximize,newpage-rtl,newpage,numberedlist-rtl,numberedlist,' +
+        'outdent-rtl,outdent,pagebreak-rtl,pagebreak,paste-rtl,paste,' +
+        'pastefromword-rtl,pastefromword,pastetext-rtl,pastetext,placeholder,preview-rtl,' +
+        'preview,print,radio,redo-rtl,redo,removeformat,replace,save,scayt,' +
+        'select-rtl,select,selectall,showblocks-rtl,showblocks,smiley,' +
+        'source-rtl,source,specialchar,spellchecker,strike,subscript,' +
+        'superscript,table,templates-rtl,templates,textarea-rtl,textarea,' +
+        'textcolor,textfield,underline,undo-rtl,undo,unlink' ).split( ',' );
 
-	var iconsFolder = CKEDITOR.getUrl( CKEDITOR.skin.path() + 'icons/' );
+    var iconsFolder = CKEDITOR.getUrl( CKEDITOR.skin.path() + 'icons/' );
 
-	for ( var i = 0; i < icons.length; i++ ) {
-		CKEDITOR.skin.addIcon( icons[ i ], iconsFolder + icons[ i ] + '.png' );
-	}
+    for ( var i = 0; i < icons.length; i++ ) {
+        CKEDITOR.skin.addIcon( icons[ i ], iconsFolder + icons[ i ] + '.png' );
+    }
 })();
 
 // %REMOVE_END%

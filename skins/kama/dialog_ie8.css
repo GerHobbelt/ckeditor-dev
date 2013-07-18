@@ -15,10 +15,10 @@ This file contains styles to used by Internet Explorer 8 only.
 
 .cke_rtl .cke_dialog_footer_buttons td
 {
-	padding-left: 2px;
+    padding-left: 2px;
 }
 
 .cke_rtl .cke_dialog_close_button
 {
-	left: 8px;
+    left: 8px;
 }

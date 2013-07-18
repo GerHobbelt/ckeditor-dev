@@ -19,12 +19,12 @@ java -jar cklangtool/$CKLANGTOOL_VERSION/langtool.jar update ../../lang
 
 for i in "${plugins[@]}"
 do
-	java -jar cklangtool/$CKLANGTOOL_VERSION/langtool.jar update ../../plugins/$i/lang
+    java -jar cklangtool/$CKLANGTOOL_VERSION/langtool.jar update ../../plugins/$i/lang
 done
 
 for i in "${plugins_dialogs[@]}"
 do
-	java -jar cklangtool/$CKLANGTOOL_VERSION/langtool.jar update ../../plugins/$i/dialogs/lang
+    java -jar cklangtool/$CKLANGTOOL_VERSION/langtool.jar update ../../plugins/$i/dialogs/lang
 done
 
 echo ""

@@ -5,8 +5,8 @@
 
 /**
  * @fileOverview Defines the "virtual" {@link CKEDITOR.pluginDefinition} class which
- *		contains the defintion of a plugin. This file is for documentation
- *		purposes only.
+ *      contains the defintion of a plugin. This file is for documentation
+ *      purposes only.
  */
 
 /**
@@ -23,9 +23,9 @@
  * A list of plugins that are required by this plugin. Note that this property
  * does not determine the loading order of the plugins.
  *
- *		CKEDITOR.plugins.add( 'sample', {
- *			requires: [ 'button', 'selection' ]
- *		} );
+ *      CKEDITOR.plugins.add( 'sample', {
+ *          requires: [ 'button', 'selection' ]
+ *      } );
  *
  * @property {Array} requires
  */
@@ -41,9 +41,9 @@
  * is available, and if so, loads it. Otherwise, the file represented by the first item
  * in the list is loaded.
  *
- *		CKEDITOR.plugins.add( 'sample', {
- *			lang: [ 'en', 'fr' ]
- *		} );
+ *      CKEDITOR.plugins.add( 'sample', {
+ *          lang: [ 'en', 'fr' ]
+ *      } );
  *
  * @property {Array} lang
  */
@@ -55,11 +55,11 @@
  * feature makes it possible to initialize things that could be used in the
  * `init` function of other plugins.
  *
- *		CKEDITOR.plugins.add( 'sample', {
- *			beforeInit: function( editor ) {
- *				alert( 'Editor "' + editor.name + '" is to be initialized!' );
- *			}
- *		} );
+ *      CKEDITOR.plugins.add( 'sample', {
+ *          beforeInit: function( editor ) {
+ *              alert( 'Editor "' + editor.name + '" is to be initialized!' );
+ *          }
+ *      } );
  *
  * @method beforeInit
  * @param {CKEDITOR.editor} editor The editor instance being initialized.
@@ -68,11 +68,11 @@
 /**
  * Function called on initialization of every editor instance created in the page.
  *
- *		CKEDITOR.plugins.add( 'sample', {
- *			init: function( editor ) {
- *				alert( 'Editor "' + editor.name + '" is being initialized!' );
- *			}
- *		} );
+ *      CKEDITOR.plugins.add( 'sample', {
+ *          init: function( editor ) {
+ *              alert( 'Editor "' + editor.name + '" is being initialized!' );
+ *          }
+ *      } );
  *
  * @method init
  * @param {CKEDITOR.editor} editor The editor instance being initialized.

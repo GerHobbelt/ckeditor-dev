@@ -11,86 +11,86 @@
  * @param {CKEDITOR.editor} editor The editor instance.
  */
 CKEDITOR.keystrokeHandler = function( editor ) {
-	if ( editor.keystrokeHandler )
-		return editor.keystrokeHandler;
+    if ( editor.keystrokeHandler )
+        return editor.keystrokeHandler;
 
-	/**
-	 * List of keystrokes associated to commands. Each entry points to the
-	 * command to be executed.
-	 *
-	 * Since CKEditor 4 there's no need to modify this property directly during the runtime.
-	 * Use {@link CKEDITOR.editor#setKeystroke} instead.
-	 */
-	this.keystrokes = {};
+    /**
+     * List of keystrokes associated to commands. Each entry points to the
+     * command to be executed.
+     *
+     * Since CKEditor 4 there's no need to modify this property directly during the runtime.
+     * Use {@link CKEDITOR.editor#setKeystroke} instead.
+     */
+    this.keystrokes = {};
 
-	/**
-	 * List of keystrokes that should be blocked if not defined at
-	 * {@link #keystrokes}. In this way it is possible to block the default
-	 * browser behavior for those keystrokes.
-	 */
-	this.blockedKeystrokes = {};
+    /**
+     * List of keystrokes that should be blocked if not defined at
+     * {@link #keystrokes}. In this way it is possible to block the default
+     * browser behavior for those keystrokes.
+     */
+    this.blockedKeystrokes = {};
 
-	this._ = {
-		editor: editor
-	};
+    this._ = {
+        editor: editor
+    };
 
-	return this;
+    return this;
 };
 
 (function() {
-	var cancel;
+    var cancel;
 
-	var onKeyDown = function( event ) {
-			// The DOM event object is passed by the "data" property.
-			event = event.data;
+    var onKeyDown = function( event ) {
+            // The DOM event object is passed by the "data" property.
+            event = event.data;
 
-			var keyCombination = event.getKeystroke();
-			var command = this.keystrokes[ keyCombination ];
-			var editor = this._.editor;
+            var keyCombination = event.getKeystroke();
+            var command = this.keystrokes[ keyCombination ];
+            var editor = this._.editor;
 
-			cancel = ( editor.fire( 'key', { keyCode: keyCombination } ) === false );
+            cancel = ( editor.fire( 'key', { keyCode: keyCombination } ) === false );
 
-			if ( !cancel ) {
-				if ( command ) {
-					var data = { from: 'keystrokeHandler' };
-					cancel = ( editor.execCommand( command, data ) !== false );
-				}
+            if ( !cancel ) {
+                if ( command ) {
+                    var data = { from: 'keystrokeHandler' };
+                    cancel = ( editor.execCommand( command, data ) !== false );
+                }
 
-				if ( !cancel )
-					cancel = !!this.blockedKeystrokes[ keyCombination ];
-			}
+                if ( !cancel )
+                    cancel = !!this.blockedKeystrokes[ keyCombination ];
+            }
 
-			if ( cancel )
-				event.preventDefault( true );
+            if ( cancel )
+                event.preventDefault( true );
 
-			return !cancel;
-		};
+            return !cancel;
+        };
 
-	var onKeyPress = function( event ) {
-			if ( cancel ) {
-				cancel = false;
-				event.data.preventDefault( true );
-			}
-		};
+    var onKeyPress = function( event ) {
+            if ( cancel ) {
+                cancel = false;
+                event.data.preventDefault( true );
+            }
+        };
 
-	CKEDITOR.keystrokeHandler.prototype = {
-		/**
-		 * Attaches this keystroke handle to a DOM object. Keystrokes typed
-		 * over this object will get handled by this keystrokeHandler.
-		 *
-		 * @param {CKEDITOR.dom.domObject} domObject The DOM object to attach to.
-		 */
-		attach: function( domObject ) {
-			// For most browsers, it is enough to listen to the keydown event
-			// only.
-			domObject.on( 'keydown', onKeyDown, this );
+    CKEDITOR.keystrokeHandler.prototype = {
+        /**
+         * Attaches this keystroke handle to a DOM object. Keystrokes typed
+         * over this object will get handled by this keystrokeHandler.
+         *
+         * @param {CKEDITOR.dom.domObject} domObject The DOM object to attach to.
+         */
+        attach: function( domObject ) {
+            // For most browsers, it is enough to listen to the keydown event
+            // only.
+            domObject.on( 'keydown', onKeyDown, this );
 
-			// Some browsers instead, don't cancel key events in the keydown, but in the
-			// keypress. So we must do a longer trip in those cases.
-			if ( CKEDITOR.env.opera || ( CKEDITOR.env.gecko && CKEDITOR.env.mac ) )
-				domObject.on( 'keypress', onKeyPress, this );
-		}
-	};
+            // Some browsers instead, don't cancel key events in the keydown, but in the
+            // keypress. So we must do a longer trip in those cases.
+            if ( CKEDITOR.env.opera || ( CKEDITOR.env.gecko && CKEDITOR.env.mac ) )
+                domObject.on( 'keypress', onKeyPress, this );
+        }
+    };
 })();
 
 /**
@@ -108,21 +108,21 @@ CKEDITOR.keystrokeHandler = function( editor ) {
  * See {@link CKEDITOR.editor#setKeystroke} documentation for more details
  * regarding the start up order.
  *
- *		// Change default CTRL + L keystroke for 'link' command to CTRL + SHIFT + L.
- *		config.keystrokes = [
- *			...
- *			[ CKEDITOR.CTRL + CKEDITOR.SHIFT + 76, 'link' ],	// CTRL + SHIFT + L
- *			...
- *		];
+ *      // Change default CTRL + L keystroke for 'link' command to CTRL + SHIFT + L.
+ *      config.keystrokes = [
+ *          ...
+ *          [ CKEDITOR.CTRL + CKEDITOR.SHIFT + 76, 'link' ],    // CTRL + SHIFT + L
+ *          ...
+ *      ];
  *
  * To reset a particular keystroke, the following approach can be used:
  *
- *		// Disable default CTRL + L keystroke which executes link command by default.
- *		config.keystrokes = [
- *			...
- *			[ CKEDITOR.CTRL + 76, null ],						// CTRL + L
- *			...
- *		];
+ *      // Disable default CTRL + L keystroke which executes link command by default.
+ *      config.keystrokes = [
+ *          ...
+ *          [ CKEDITOR.CTRL + 76, null ],                       // CTRL + L
+ *          ...
+ *      ];
  *
  * To reset all default keystrokes an {@link CKEDITOR#instanceReady} callback should be
  * used. This is since editor defaults are merged rather than overwritten by
@@ -131,10 +131,10 @@ CKEDITOR.keystrokeHandler = function( editor ) {
  * **Note**: This can be potentially harmful for an editor. Avoid this unless you're
  * aware of the consequences.
  *
- *		// Reset all default keystrokes.
- *		config.on.instanceReady = function() {
- *			this.keystrokeHandler.keystrokes = [];
- *		};
+ *      // Reset all default keystrokes.
+ *      config.on.instanceReady = function() {
+ *          this.keystrokeHandler.keystrokes = [];
+ *      };
  *
  * @cfg {Array} [keystrokes=[]]
  * @member CKEDITOR.config

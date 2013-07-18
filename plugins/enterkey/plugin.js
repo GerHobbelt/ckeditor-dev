@@ -510,11 +510,13 @@
 			forceMode = 1;
 		}
 
+		// Downgrade P/DIV mode to BR if adequate element is not allowed by current filter.
 		if ( mode != CKEDITOR.ENTER_BR && !editor.activeFilter.check( mode == CKEDITOR.ENTER_P ? 'p' : 'div' ) ) {
 			mode = CKEDITOR.ENTER_BR;
 			forceMode = 1;
 		}
 
+		// Block enter completely if even BR is not allowed.
 		if ( mode == CKEDITOR.ENTER_BR && !editor.activeFilter.check( 'br' ) )
 			return;
 

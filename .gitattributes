@@ -1,19 +1,18 @@
-*.sh            text eol=lf
-*.php           text eol=lf
-*.inc           text eol=lf
-*.html          text eol=lf
-*.js            text eol=lf
+*.cgi			text eol=lf
 *.css           text eol=lf
+*.htaccess		text eol=lf
+*.htm			text eol=lf
+*.html          text eol=lf
+*.inc           text eol=lf
 *.ini           text eol=lf
+*.js            text eol=lf
+*.markdown      text eol=lf
+*.md            text eol=lf
+*.php           text eol=lf
+*.sh            text eol=lf
 *.txt           text eol=lf
 *.xml           text eol=lf
-*.md            text eol=lf
-*.markdown      text eol=lf
 
-*.cgi		text eol=lf
-*.htaccess	text eol=lf
-*.htm		text eol=lf
-
-*.png		-text
-*.gif		-text
-*.jpg		-text
+*.png			-text
+*.gif			-text
+*.jpg			-text

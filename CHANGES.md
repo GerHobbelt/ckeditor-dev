@@ -5,6 +5,9 @@ CKEditor 4 Changelog
 
 New Features:
 
+* [#10911](http://dev.ckeditor.com/ticket/10911): Browser alt hotkeys will no longer be blocked while widget is focused.
+* [#10856](http://dev.ckeditor.com/ticket/10856): Menu-buttons will now toggle their panels visibility when clicked multiple times. Language plugin fixes: added active language highlighting, added option to remove language.
+* [#10822](http://dev.ckeditor.com/ticket/10822): Added styles system integration with non-editable elements (for example widgets) and their nested editables. Styles cannot change non-editable content and are applied in nested editable only if allowed by its type and content filter.
 * [#10855](http://dev.ckeditor.com/ticket/10855): Change extension of emotes in BBCode sample from GIF to PNG.
 * [#11002](http://dev.ckeditor.com/ticket/11002): Added option to disable widgets drag and drop support.
 * [#10430](http://dev.ckeditor.com/ticket/10430): Resolve dependence of image plugin if forms plugin.
@@ -29,6 +32,9 @@ Fixed Issues:
 * [#10879](http://dev.ckeditor.com/ticket/10879): Remove format should not leak from nested editable.
 * [#10877](http://dev.ckeditor.com/ticket/10877): Fixed: WebSpellChecker fails to apply changes if nested editable was focused.
 * [#10870](http://dev.ckeditor.com/ticket/10870): Fixed: `paste` command is not being disabled when clipboard is empty any more.
+* [#10866](http://dev.ckeditor.com/ticket/10866): Fixed: Broken *Tab* key navigation in the Image2 dialog.
+* [#10854](http://dev.ckeditor.com/ticket/10854): Fixed: Firefox prepends `<br>` to `<body>`, so it is stripped by the HTML data processor.
+* [#10823](http://dev.ckeditor.com/ticket/10823): Fixed: Link plugin does not work with non-editable content.
 
 ## CKEditor 4.3 Beta
 

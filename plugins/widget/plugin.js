@@ -961,6 +961,10 @@
 					'data-cke-widget-editable': editableName,
 					'data-cke-enter-mode': editable.enterMode
 				} );
+
+				if ( editable.filter )
+					editable.data( 'cke-filter', editable.filter.id );
+
 				editable.addClass( 'cke_widget_editable' );
 				// This class may be left when d&ding widget which
 				// had focused editable. Clean this class here, not in
@@ -2410,8 +2414,8 @@
 				return; // Do not preventDefault.
 			}
 			// Pass chosen keystrokes to other plugins or default fake sel handlers.
-			// Pass all CTRL keystrokes.
-			else if ( keyCode in keystrokesNotBlockedByWidget || ( CKEDITOR.CTRL & keyCode ) )
+			// Pass all CTRL/ALT keystrokes.
+			else if ( keyCode in keystrokesNotBlockedByWidget || ( CKEDITOR.CTRL & keyCode ) || ( CKEDITOR.ALT & keyCode ) )
 				return;
 
 			return false;

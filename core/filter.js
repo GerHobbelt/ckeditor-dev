@@ -96,6 +96,16 @@
 		 */
 		this.editor = null;
 
+		/**
+		 * Filter's unique id. It can be used to find filter instance in
+		 * {@link CKEDITOR.filter#instances CKEDITOR.filter.instance} object.
+		 *
+		 * @since 4.3
+		 * @readonly
+		 * @property {Number} id
+		 */
+		this.id = CKEDITOR.tools.getNextNumber();
+
 		this._ = {
 			// Optimized allowed content rules.
 			rules: {},
@@ -103,6 +113,9 @@
 			transformations: {},
 			cachedTests: {}
 		};
+
+		// Register filter instance.
+		CKEDITOR.filter.instances[ this.id ] = this;
 
 		if ( editorOrRules instanceof CKEDITOR.editor ) {
 			var editor = this.editor = editorOrRules;
@@ -131,6 +144,19 @@
 			this.allow( editorOrRules, 'default', 1 );
 		}
 	};
+
+	/**
+	 * Object containing all filter instances stored under their
+	 * {@link #id} properties.
+	 *
+	 *		var filter = new CKEDITOR.filter( 'p' );
+	 *		filter === CKEDITOR.filter.instances[ filter.id ];
+	 *
+	 * @since 4.3
+	 * @static
+	 * @property instances
+	 */
+	CKEDITOR.filter.instances = {};
 
 	CKEDITOR.filter.prototype = {
 		/**
@@ -280,7 +306,7 @@
 
 			var node, element, check,
 				toBeChecked = [],
-				enterTag = enterModeTags[ enterMode || ( this.editor ? this.editor.activeEnterMode : CKEDITOR.ENTER_P ) ];
+				enterTag = enterModeTags[ enterMode || ( this.editor ? this.editor.enterMode : CKEDITOR.ENTER_P ) ];
 
 			// Remove elements in reverse order - from leaves to root, to avoid conflicts.
 			while ( ( node = toBeRemoved.pop() ) ) {

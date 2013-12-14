@@ -226,12 +226,18 @@ CKEDITOR.STYLE_OBJECT = 3;
 		},
 
 		/**
-		 * Whether this style can be applied at the element path.
+		 * Whether this style can be applied at the specified elements-path.
 		 *
-		 * @param {CKEDITOR.dom.elementPath} elementPath
+		 * @param {CKEDITOR.dom.elementPath} elementPath The elements-path to
+		 * 	check the style against.
+		 * @param {CKEDITOR.filter} [filter] If defined, the style will be
+		 * 	checked against this filter as well.
 		 * @returns {Boolean} `true` if this style can be applied at the element path.
 		 */
-		checkApplicable: function( elementPath ) {
+		checkApplicable: function( elementPath, filter ) {
+			if ( filter && !filter.check( this ) )
+				return false;
+
 			switch ( this.type ) {
 				case CKEDITOR.STYLE_OBJECT:
 					return !!elementPath.contains( this.element );
@@ -482,7 +488,7 @@ CKEDITOR.STYLE_OBJECT = 3;
 
 	function checkIfTextOrReadonlyOrEmptyElement( currentNode, nodeIsReadonly ) {
 		var nodeType = currentNode.type;
-		return nodeType == CKEDITOR.NODE_TEXT || nodeIsReadonly || ( nodeType == CKEDITOR.NODE_ELEMENT && !currentNode.getChildCount() )
+		return nodeType == CKEDITOR.NODE_TEXT || nodeIsReadonly || ( nodeType == CKEDITOR.NODE_ELEMENT && !currentNode.getChildCount() );
 	}
 
 	// Checks if position is a subset of posBitFlags and that nodeA fulfills style def rule.
@@ -1228,14 +1234,14 @@ CKEDITOR.STYLE_OBJECT = 3;
 			styles = def.styles,
 			overrides = getOverrides( this ),
 			innerElements = element.getElementsByTag( this.element ),
-			element;
+			innerElement;
 
 		for ( var i = innerElements.count(); --i >= 0; ) {
-			element = innerElements.getItem( i );
+			innerElement = innerElements.getItem( i );
 
 			// Do not remove elements which are read only (e.g. duplicates inside widgets).
-			if ( !element.isReadOnly() )
-				removeFromElement.call( this, element );
+			if ( !innerElement.isReadOnly() )
+				removeFromElement.call( this, innerElement );
 		}
 
 		// Now remove any other element with different name that is
@@ -1245,11 +1251,11 @@ CKEDITOR.STYLE_OBJECT = 3;
 				innerElements = element.getElementsByTag( overrideElement );
 
 				for ( i = innerElements.count() - 1; i >= 0; i-- ) {
-					element = innerElements.getItem( i );
+					innerElement = innerElements.getItem( i );
 
 					// Do not remove elements which are read only (e.g. duplicates inside widgets).
-					if ( !element.isReadOnly() )
-						removeOverrides( innerElement, overrides[ element ] );
+					if ( !innerElement.isReadOnly() )
+						removeOverrides( innerElement, overrides[ overrideElement ] );
 				}
 			}
 		}

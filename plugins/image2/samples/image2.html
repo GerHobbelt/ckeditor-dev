@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
-For licensing, see LICENSE.html or http://ckeditor.com/license
+For licensing, see LICENSE.md or http://ckeditor.com/license
 -->
 <html>
 <head>
@@ -17,7 +17,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	<meta name="ckeditor-sample-group" content="Plugins">
 	<meta name="ckeditor-sample-description" content="Using the new Image plugin to insert captioned images and adjust their dimensions.">
 	<meta name="ckeditor-sample-isnew" content="1">
-	<meta name="ckeditor-sample-isbeta" content="1">
 </head>
 <body>
 	<h1 class="samples">
@@ -37,7 +36,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 <pre class="samples">
 CKEDITOR.replace( '<em>textarea_id</em>', {
 	<strong>extraPlugins: 'image2',</strong>
-	<strong>removePlugins: 'image,forms'</strong>
+	<strong>removePlugins: 'image'</strong>
 } );
 </pre>
 	</div>
@@ -51,7 +50,7 @@ CKEDITOR.replace( '<em>textarea_id</em>', {
 		CKEDITOR.replace( 'editor1', {
 			extraPlugins: 'image2',
 			height: 450,
-			removePlugins: 'image,forms',
+			removePlugins: 'image',
 			contentsCss: [ '../../../contents.css', 'contents.css' ]
 		} );
 

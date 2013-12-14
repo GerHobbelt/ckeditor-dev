@@ -1,6 +1,6 @@
-/**
+﻿/**
  * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.html or http://ckeditor.com/license
+ * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
 'use strict';
@@ -15,7 +15,7 @@
 		regexPercent = /^\s*(\d+\%)\s*$/i;
 
 	CKEDITOR.plugins.add( 'image2', {
-		lang: 'en', // %REMOVE_LINE_CORE%
+		lang: 'af,ar,bg,bn,bs,ca,cs,cy,da,de,el,en,en-au,en-ca,en-gb,eo,es,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
 		requires: 'widget,dialog',
 		icons: 'image2',
 		hidpi: true,
@@ -53,6 +53,18 @@
 		},
 
 		init: function( editor ) {
+
+			// Adapts configuration from original image plugin. Should be removed
+			// when we'll rename image2 to image.
+			var config = editor.config,
+				lang = editor.lang.image2;
+			config.filebrowserImage2BrowseUrl = config.filebrowserImageBrowseUrl;
+			config.filebrowserImage2UploadUrl = config.filebrowserImageUploadUrl;
+
+			// Add custom elementspath names to widget definition.
+			image2.pathName = lang.pathName;
+			image2.editables.caption.pathName = lang.pathNameCaption;
+
 			// Register the widget.
 			editor.widgets.add( 'image2', image2 );
 
@@ -68,7 +80,7 @@
 				editor.addMenuGroup( 'image2', 10 );
 
 				editor.addMenuItem( 'image2', {
-					label: editor.lang.image2.menu,
+					label: lang.menu,
 					command: 'image2',
 					group: 'image2'
 				} );
@@ -120,7 +132,7 @@
 		editables: {
 			caption: {
 				selector: 'figcaption',
-				allowedContent: 'br em strong sub sup u; a[!href]'
+				allowedContent: 'br em strong sub sup u s; a[!href]'
 			}
 		},
 
@@ -203,13 +215,17 @@
 		},
 
 		init: function() {
-			var image = this.parts.image,
+			var helpers = CKEDITOR.plugins.image2,
+				image = this.parts.image,
 				data = {
 					hasCaption: !!this.parts.caption,
 					src: image.getAttribute( 'src' ),
 					alt: image.getAttribute( 'alt' ) || '',
 					width: image.getAttribute( 'width' ) || '',
-					height: image.getAttribute( 'height' ) || ''
+					height: image.getAttribute( 'height' ) || '',
+
+					// Lock ratio is on by default (#10833).
+					lock: this.ready ? helpers.checkHasNaturalRatio( image ) : true
 				};
 
 			// Read initial float style from figure/image and
@@ -230,7 +246,7 @@
 			// Setup dynamic image resizing with mouse.
 			setupResizer( this );
 
-			this.shiftState = CKEDITOR.plugins.image2.stateShifter( this.editor );
+			this.shiftState = helpers.stateShifter( this.editor );
 
 			// Add widget editing option to its context menu.
 			this.on( 'contextMenu', function( evt ) {
@@ -406,6 +422,48 @@
 
 				data.init( data.element );
 			};
+		},
+
+		// Checks whether current ratio of the image match the natural one.
+		// by comparing dimensions.
+		// @param {CKEDITOR.dom.element} image
+		// @returns {Boolean}
+		checkHasNaturalRatio: function( image ) {
+			var $ = image.$,
+				natural = this.getNatural( image );
+
+			// The reason for two alternative comparisons is that the rounding can come from
+			// both dimensions, e.g. there are two cases:
+			// 	1. height is computed as a rounded relation of the real height and the value of width,
+			//	2. width is computed as a rounded relation of the real width and the value of heigh.
+			return Math.round( $.clientWidth / natural.width * natural.height ) == $.clientHeight ||
+				Math.round( $.clientHeight / natural.height * natural.width ) == $.clientWidth;
+		},
+
+		// Returns natural dimensions of the image. For modern browsers
+		// it uses natural(Width|Height) for old ones (IE8), creates
+		// a new image and reads dimensions.
+		// @param {CKEDITOR.dom.element} image
+		// @returns {Object}
+		getNatural: function( image ) {
+			var dimensions;
+
+			if ( image.$.naturalWidth ) {
+				dimensions = {
+					width: image.$.naturalWidth,
+					height: image.$.naturalHeight
+				};
+			} else {
+				var img = new Image();
+				img.src = image.getAttribute( 'src' );
+
+				dimensions = {
+					width: img.width,
+					height: img.height
+				};
+			}
+
+			return dimensions;
 		}
 	};
 
@@ -436,6 +494,10 @@
 		var dimensions = { width:1,height:1 },
 			name = el.name,
 			image;
+
+		// #11110 Don't initialize on pasted fake objects.
+		if ( el.attributes[ 'data-cke-realelement' ] )
+			return;
 
 		// If a center wrapper is found. So the element is:
 		// 		<div style="text-align:center"><figure>...</figure></div>.
@@ -539,7 +601,7 @@
 		if ( childName != 'img' && !( childName == 'figure' && child.hasClass( 'caption' ) ) )
 			return false;
 
-		var styles = CKEDITOR.tools.parseCssText( el.attributes.style || '' );
+		var styles = CKEDITOR.tools.parseCssText( el.attributes.style || '', true );
 
 		// Centering wrapper got to be... centering.
 		if ( styles[ 'text-align' ] == 'center' )
@@ -656,13 +718,13 @@
 			// Calculate with first, and then adjust height, preserving ratio.
 			function adjustToX() {
 				newWidth = startWidth + factor * moveDiffX;
-				newHeight = 0 | newWidth / ratio;
+				newHeight = Math.round( newWidth / ratio );
 			}
 
 			// Calculate height first, and then adjust width, preserving ratio.
 			function adjustToY() {
 				newHeight = startHeight - moveDiffY;
-				newWidth = 0 | newHeight * ratio;
+				newWidth = Math.round( newHeight * ratio );
 			}
 
 			// This is how variables refer to the geometry.

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
@@ -16,7 +16,7 @@
 
 	CKEDITOR.plugins.add( 'language', {
 		requires: 'menubutton',
-		lang: 'en', // %REMOVE_LINE_CORE%
+		lang: 'en,ja,uk', // %REMOVE_LINE_CORE%
 		icons: 'language', // %REMOVE_LINE_CORE%
 		hidpi: true, // %REMOVE_LINE_CORE%
 
@@ -120,12 +120,9 @@
 			} );
 		},
 
-		/**
-		 * Gets the first language element for the current editor selection.
-		 * @param {CKEDITOR.editor} editor
-		 * @returns {CKEDITOR.dom.element} The language element, if any.
-		 * @member CKEDITOR.plugins.language
-		 */
+		// Gets the first language element for the current editor selection.
+		// @param {CKEDITOR.editor} editor
+		// @returns {CKEDITOR.dom.element} The language element, if any.
 		getCurrentLangElement: function( editor ) {
 			var elementPath = editor.elementPath(),
 				activePath = elementPath && elementPath.elements,

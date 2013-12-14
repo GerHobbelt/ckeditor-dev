@@ -1718,10 +1718,10 @@
  *		// Changes keystroke to CTRL + ,
  *		CKEDITOR.config.magicline_keystrokePrevious = CKEDITOR.CTRL + 188;
  *
- * @cfg {Number} [magicline_keystrokePrevious=CKEDITOR.CTRL + CKEDITOR.SHIFT + 219 (CTRL + SHIFT + [)]
+ * @cfg {Number} [magicline_keystrokePrevious=CKEDITOR.CTRL + CKEDITOR.SHIFT + 51 (CTRL + SHIFT + 3)]
  * @member CKEDITOR.config
  */
-CKEDITOR.config.magicline_keystrokePrevious = CKEDITOR.CTRL + CKEDITOR.SHIFT + 219; // CTRL + SHIFT + [
+CKEDITOR.config.magicline_keystrokePrevious = CKEDITOR.CTRL + CKEDITOR.SHIFT + 51; // CTRL + SHIFT + 3
 
 /**
  * Defines default keystroke that access the closest unreachable focus space **after**
@@ -1730,10 +1730,10 @@ CKEDITOR.config.magicline_keystrokePrevious = CKEDITOR.CTRL + CKEDITOR.SHIFT + 2
  *		// Changes keystroke to CTRL + .
  *		CKEDITOR.config.magicline_keystrokeNext = CKEDITOR.CTRL + 190;
  *
- * @cfg {Number} [magicline_keystrokeNext=CKEDITOR.CTRL + CKEDITOR.SHIFT + 221 (CTRL + SHIFT + ])]
+ * @cfg {Number} [magicline_keystrokeNext=CKEDITOR.CTRL + CKEDITOR.SHIFT + 52 (CTRL + SHIFT + 4)]
  * @member CKEDITOR.config
  */
-CKEDITOR.config.magicline_keystrokeNext = CKEDITOR.CTRL + CKEDITOR.SHIFT + 221; // CTRL + SHIFT + ]
+CKEDITOR.config.magicline_keystrokeNext = CKEDITOR.CTRL + CKEDITOR.SHIFT + 52; // CTRL + SHIFT + 4
 
 /**
  * Defines a list of attributes that, if assigned to some elements, prevent magicline from being

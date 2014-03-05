@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -511,9 +511,6 @@
 				var onResize = iframe.removeCustomData( 'onResize' );
 				onResize && onResize.removeListener();
 
-
-				editor.fire( 'contentDomUnload' );
-
 				// IE BUG: When destroying editor DOM with the selection remains inside
 				// editing area would break IE7/8's selection system, we have to put the editing
 				// iframe offline first. (#3812 and #5441)
@@ -608,10 +605,10 @@ CKEDITOR.config.disableNativeSpellChecker = true;
  *		config.contentsCss = '/css/mysitestyles.css';
  *		config.contentsCss = ['/css/mysitestyles.css', '/css/anotherfile.css'];
  *
- * @cfg {String/Array} [contentsCss=CKEDITOR.basePath + 'contents.css']
+ * @cfg {String/Array} [contentsCss=CKEDITOR.getUrl( 'contents.css' )]
  * @member CKEDITOR.config
  */
-CKEDITOR.config.contentsCss = CKEDITOR.basePath + 'contents.css';
+CKEDITOR.config.contentsCss = CKEDITOR.getUrl( 'contents.css' );
 
 /**
  * Language code of  the writting language which is used to author the editor

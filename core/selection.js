@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -396,6 +396,20 @@
 
 			if ( enclosedNode.getAttribute( 'contenteditable' ) == 'false' )
 				return enclosedNode;
+		}
+	}
+
+	// Fix ranges which may end after hidden selection container.
+	// Note: this function may only be used if hidden selection container
+	// is not in DOM any more.
+	function fixRangesAfterHiddenSelectionContainer( ranges, root ) {
+		var range;
+		for ( var i = 0; i < ranges.length; ++i ) {
+			range = ranges[ i ];
+			if ( range.endContainer.equals( root ) ) {
+				// We can use getChildCount() because hidden selection container is not in DOM.
+				range.endOffset = Math.min( range.endOffset, root.getChildCount() );
+			}
 		}
 	}
 
@@ -1715,7 +1729,17 @@
 		 * representing ranges to be added to the document.
 		 */
 		selectRanges: function( ranges ) {
+			var editor = this.root.editor,
+				hadHiddenSelectionContainer = editor && editor._.hiddenSelectionContainer;
+
 			this.reset();
+
+			// Check if there's a hiddenSelectionContainer in editable at some index.
+			// Some ranges may be anchored after the hiddenSelectionContainer and,
+			// once the container is removed while resetting the selection, they
+			// may need new endOffset (one element less within the range) (#11021 #11393).
+			if ( hadHiddenSelectionContainer )
+				fixRangesAfterHiddenSelectionContainer( ranges, this.root );
 
 			if ( !ranges.length )
 				return;

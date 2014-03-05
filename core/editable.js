@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -127,12 +127,10 @@
 			/**
 			 * Restore all attribution changes made by {@link #changeAttr }.
 			 */
-			restoreAttrs : function() {
+			restoreAttrs: function() {
 				var changes = this._.attrChanges, orgVal;
-				for ( var attr in changes )
-				{
-					if ( changes.hasOwnProperty( attr ) )
-					{
+				for ( var attr in changes ) {
+					if ( changes.hasOwnProperty( attr ) ) {
 						orgVal = changes[ attr ];
 						// Restore original attribute.
 						orgVal !== null ? this.setAttribute( attr, orgVal ) : this.removeAttribute( attr );
@@ -160,11 +158,9 @@
 			 * @param {String} attr The attribute name to be changed.
 			 * @param {String} val The value of specified attribute.
 			 */
-			changeAttr : function( attr, val ) {
-
+			changeAttr: function( attr, val ) {
 				var orgVal = this.getAttribute( attr );
-				if ( val !== orgVal )
-				{
+				if ( val !== orgVal ) {
 					!this._.attrChanges && ( this._.attrChanges = {} );
 
 					// Saved the original attribute val.
@@ -773,6 +769,8 @@
 					} else
 						doc.setCustomData( 'stylesheet_ref', refs );
 				}
+
+				this.editor.fire( 'contentDomUnload' );
 
 				// Free up the editor reference.
 				delete this.editor;

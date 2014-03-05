@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -62,7 +62,6 @@ CKEDITOR.dialog.add( 'sourcedialog', function( editor ) {
 			id: 'main',
 			label: editor.lang.sourcedialog.title,
 			elements: [ {
-				type: 'textarea',
 				type: 'textarea',
 				id: 'data',
 				dir: 'ltr',

@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -758,8 +758,9 @@
 
 			// Webkit fill fire blur on editable when moving selection to
 			// pastebin (if body is used). Cancel it because it causes incorrect
-			// selection lock in case of inline editor.
-			if ( CKEDITOR.env.webkit )
+			// selection lock in case of inline editor (#10644).
+			// The same seems to apply to Firefox (#10787).
+			if ( CKEDITOR.env.webkit || CKEDITOR.env.gecko )
 				blurListener = editable.once( 'blur', cancel, null, null, -100 );
 
 			// Temporarily move selection to the pastebin.
@@ -880,7 +881,7 @@
 					editor.fire( 'saveSnapshot' ); // Save before cut
 					setTimeout( function() {
 						editor.fire( 'saveSnapshot' ); // Save after cut
-					}, 0 );
+					}, 50 ); // OSX is slow (#11416).
 			}
 		}
 
@@ -1093,7 +1094,7 @@
 						return false;
 
 					// Remove all attributes.
-					element.attributes = [];
+					element.attributes = {};
 
 					// Pass brs.
 					if ( initialName == 'br' )

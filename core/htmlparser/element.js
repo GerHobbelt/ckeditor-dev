@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -484,7 +484,8 @@ CKEDITOR.htmlParser.cssStyle = function() {
 			if ( !ctx ) {
 				ctx = {
 					off: false,
-					nonEditable: false
+					nonEditable: false,
+					nestedEditable: false
 				};
 			}
 
@@ -493,6 +494,9 @@ CKEDITOR.htmlParser.cssStyle = function() {
 
 			if ( !ctx.nonEditable && this.attributes[ 'contenteditable' ] == 'false' )
 				changes.push( 'nonEditable', true );
+			// A context to be given nestedEditable must be nonEditable first (by inheritance).
+			else if ( !ctx.nestedEditable && this.attributes[ 'contenteditable' ] == 'true' )
+				changes.push( 'nestedEditable', true );
 
 			if ( changes.length ) {
 				ctx = CKEDITOR.tools.copy( ctx );

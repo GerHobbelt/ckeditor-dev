@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -390,8 +390,13 @@
 	}
 
 	function isRuleApplicable( context, rule ) {
-		// Do not apply rule if context is nonEditable and rule doesn't have applyToAll option.
-		return !context.nonEditable || rule.options.applyToAll;
+		if ( context.nonEditable && !rule.options.applyToAll )
+			return false;
+
+		if ( context.nestedEditable && rule.options.excludeNestedEditable )
+			return false;
+
+		return true;
 	}
 
 } )();

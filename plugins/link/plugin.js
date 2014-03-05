@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -27,6 +27,8 @@ CKEDITOR.plugins.add( 'link', {
 			'{' +
 				// Make empty anchor selectable on IE.
 				'display:inline-block;' +
+				// IE11 doesn't display empty inline-block elements.
+				( CKEDITOR.env.ie && CKEDITOR.env.version > 10 ? 'min-height:16px;vertical-align:middle' : '' ) +
 			'}'
 			) : '' ) +
 			'.%2 img.cke_anchor' +
@@ -276,7 +278,7 @@ CKEDITOR.plugins.link = {
 	 * @readonly
 	 * @property {Boolean}
 	 */
-	synAnchorSelector: CKEDITOR.env.ie && CKEDITOR.env.version < 11,
+	synAnchorSelector: CKEDITOR.env.ie,
 
 	/**
 	 * For browsers that have editing issue with empty anchor.

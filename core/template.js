@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -9,7 +9,12 @@
  */
 
 ( function() {
-	var cache = {};
+	var cache = {},
+		rePlaceholder = /{([^}]+)}/g,
+		reQuote = /'/g,
+		reEscapableChars = /([\\'])/g,
+		reNewLine = /\n/g,
+		reCarriageReturn = /\r/g;
 
 	/**
 	 * Lightweight template used to build the output string from variables.
@@ -34,12 +39,14 @@
 			this.output = cache[ source ];
 		else {
 			var fn = source
-			// Escape all quotation marks (").
-			.replace( /'/g, "\\'" )
-			// Inject the template keys replacement.
-			.replace( /{([^}]+)}/g, function( m, key ) {
-				return "',data['" + key + "']==undefined?'{" + key + "}':data['" + key + "'],'";
-			} );
+				// Escape chars like slash "\" or single quote "'".
+				.replace( reEscapableChars, '\\$1' )
+				.replace( reNewLine, '\\n' )
+				.replace( reCarriageReturn, '\\r' )
+				// Inject the template keys replacement.
+				.replace( rePlaceholder, function( m, key ) {
+					return "',data['" + key + "']==undefined?'{" + key + "}':data['" + key + "'],'";
+				} );
 
 			fn = "return buffer?buffer.push('" + fn + "'):['" + fn + "'].join('');";
 			this.output = cache[ source ] = Function( 'data', 'buffer', fn );

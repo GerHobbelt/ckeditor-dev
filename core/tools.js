@@ -13,7 +13,6 @@
 		cssVendorPrefix =
 			CKEDITOR.env.gecko ? '-moz-' :
 			CKEDITOR.env.webkit ? '-webkit-' :
-			CKEDITOR.env.opera ? '-o-' :
 			CKEDITOR.env.ie ? '-ms-' :
 			'';
 
@@ -326,10 +325,21 @@
 		},
 
 		/**
+		 * Decodes HTML entities.
+		 *
+		 *		alert( CKEDITOR.tools.htmlDecode( '&lt;a &amp; b &gt;' ) ); // '<a & b >'
+		 *
+		 * @param {String} The string to be decoded.
+		 * @returns {String} The decoded string.
+		 */
+		htmlDecode: function( text ) {
+			return text.replace( /&amp;/g, '&' ).replace( /&gt;/g, '>' ).replace( /&lt;/g, '<' );
+		},
+
+		/**
 		 * Replaces special HTML characters in HTMLElement attribute with their relative HTML entity values.
 		 *
-		 *		element.setAttribute( 'title', '<a " b >' );
-		 *		alert( CKEDITOR.tools.htmlEncodeAttr( element.getAttribute( 'title' ) ); // '&gt;a &quot; b &lt;'
+		 *		alert( CKEDITOR.tools.htmlEncodeAttr( '<a " b >' ) ); // '&lt;a &quot; b &gt;'
 		 *
 		 * @param {String} The attribute value to be encoded.
 		 * @returns {String} The encoded value.
@@ -343,7 +353,7 @@
 		 * {@link #htmlEncodeAttr htmlEncodeAttr} back to their plain character
 		 * representation.
 		 *
-		 *		alert( CKEDITOR.tools.htmlDecodeAttr( '&gt;a &quot; b &lt;' ); // '<a " b >'
+		 *		alert( CKEDITOR.tools.htmlDecodeAttr( '&lt;a &quot; b&gt;' ) ); // '<a " b>'
 		 *
 		 * @param {String} text The text to be decoded.
 		 * @returns {String} The decoded text.
@@ -1116,7 +1126,15 @@
 				if ( withAppend )
 					doc.appendChild( el );
 			}
-		}
+		},
+
+		/**
+		 * The data URI of a transparent image. May be used e.g. in HTML as an image source or in CSS in `url()`.
+		 *
+		 * @since 4.3.1
+		 * @readonly
+		 */
+		transparentImageData: 'data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=='
 	};
 } )();
 

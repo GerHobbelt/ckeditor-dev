@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
@@ -23,14 +23,6 @@ CKEDITOR.plugins.add( 'link', {
 				// Show the arrow cursor for the anchor image (FF at least).
 				'cursor:auto;' +
 			'}' +
-			( CKEDITOR.plugins.link.synAnchorSelector ? ( 'a.cke_anchor_empty' +
-			'{' +
-				// Make empty anchor selectable on IE.
-				'display:inline-block;' +
-				// IE11 doesn't display empty inline-block elements.
-				( CKEDITOR.env.ie && CKEDITOR.env.version > 10 ? 'min-height:16px;vertical-align:middle' : '' ) +
-			'}'
-			) : '' ) +
 			'.%2 img.cke_anchor' +
 			'{' +
 				baseStyle +
@@ -39,7 +31,7 @@ CKEDITOR.plugins.add( 'link', {
 				// The default line-height on IE.
 				'height:1.15em;' +
 				// Opera works better with "middle" (even if not perfect)
-				'vertical-align:' + ( CKEDITOR.env.opera ? 'middle' : 'text-bottom' ) + ';' +
+				'vertical-align:text-bottom;' +
 			'}';
 
 		// Styles with contents direction awareness.
@@ -164,60 +156,27 @@ CKEDITOR.plugins.add( 'link', {
 	},
 
 	afterInit: function( editor ) {
-		// Register a filter to displaying placeholders after mode change.
-
-		var dataProcessor = editor.dataProcessor,
-			dataFilter = dataProcessor && dataProcessor.dataFilter,
-			htmlFilter = dataProcessor && dataProcessor.htmlFilter,
-			pathFilters = editor._.elementsPath && editor._.elementsPath.filters;
-
-		if ( dataFilter ) {
-			dataFilter.addRules( {
-				elements: {
-					a: function( element ) {
-						var attributes = element.attributes;
-						if ( !attributes.name )
-							return null;
-
-						var isEmpty = !element.children.length;
-
-						if ( CKEDITOR.plugins.link.synAnchorSelector ) {
-							// IE needs a specific class name to be applied
-							// to the anchors, for appropriate styling.
-							var ieClass = isEmpty ? 'cke_anchor_empty' : 'cke_anchor';
-							var cls = attributes[ 'class' ];
-							if ( attributes.name && ( !cls || cls.indexOf( ieClass ) < 0 ) )
-								attributes[ 'class' ] = ( cls || '' ) + ' ' + ieClass;
-
-							if ( isEmpty && CKEDITOR.plugins.link.emptyAnchorFix ) {
-								attributes.contenteditable = 'false';
-								attributes[ 'data-cke-editable' ] = 1;
-							}
-						} else if ( CKEDITOR.plugins.link.fakeAnchor && isEmpty )
-							return editor.createFakeParserElement( element, 'cke_anchor', 'anchor' );
-
+		// Empty anchors upcasting to fake objects.
+		editor.dataProcessor.dataFilter.addRules( {
+			elements: {
+				a: function( element ) {
+					if ( !element.attributes.name )
 						return null;
-					}
-				}
-			} );
-		}
 
-		if ( CKEDITOR.plugins.link.emptyAnchorFix && htmlFilter ) {
-			htmlFilter.addRules( {
-				elements: {
-					a: function( element ) {
-						delete element.attributes.contenteditable;
-					}
-				}
-			} );
-		}
+					if ( !element.children.length )
+						return editor.createFakeParserElement( element, 'cke_anchor', 'anchor' );
 
+					return null;
+				}
+			}
+		} );
+
+		var pathFilters = editor._.elementsPath && editor._.elementsPath.filters;
 		if ( pathFilters ) {
 			pathFilters.push( function( element, name ) {
 				if ( name == 'a' ) {
 					if ( CKEDITOR.plugins.link.tryRestoreFakeAnchor( editor, element ) || ( element.getAttribute( 'name' ) && ( !element.getAttribute( 'href' ) || !element.getChildCount() ) ) )
 						return 'anchor';
-
 				}
 			} );
 		}
@@ -225,18 +184,18 @@ CKEDITOR.plugins.add( 'link', {
 } );
 
 /**
- * Set of link plugin's helpers.
+ * Set of Link plugin helpers.
  *
  * @class
  * @singleton
  */
 CKEDITOR.plugins.link = {
 	/**
-	 * Get the surrounding link element of current selection.
+	 * Get the surrounding link element of the current selection.
 	 *
 	 *		CKEDITOR.plugins.link.getSelectedLink( editor );
 	 *
-	 *		// The following selection will all return the link element.
+	 *		// The following selections will all return the link element.
 	 *
 	 *		<a href="#">li^nk</a>
 	 *		<a href="#">[link]</a>
@@ -264,34 +223,84 @@ CKEDITOR.plugins.link = {
 	},
 
 	/**
-	 * Opera and WebKit don't make it possible to select empty anchors. Fake
+	 * Collects anchors available in the editor (i.e. used by the Link plugin).
+	 * Note that the scope of search is different for inline (the "global" document) and
+	 * classic (`iframe`-based) editors (the "inner" document).
+	 *
+	 * @since 4.3.3
+	 * @param {CKEDITOR.editor} editor
+	 * @returns {CKEDITOR.dom.element[]} An array of anchor elements.
+	 */
+	getEditorAnchors: function( editor ) {
+		var editable = editor.editable(),
+
+			// The scope of search for anchors is the entire document for inline editors
+			// and editor's editable for classic editor/divarea (#11359).
+			scope = ( editable.isInline() && !editor.plugins.divarea ) ? editor.document : editable,
+
+			links = scope.getElementsByTag( 'a' ),
+			imgs = scope.getElementsByTag( 'img' ),
+			anchors = [],
+			i = 0,
+			item;
+
+		// Retrieve all anchors within the scope.
+		while ( ( item = links.getItem( i++ ) ) ) {
+			if ( item.data( 'cke-saved-name' ) || item.hasAttribute( 'name' ) ) {
+				anchors.push( {
+					name: item.data( 'cke-saved-name' ) || item.getAttribute( 'name' ),
+					id: item.getAttribute( 'id' )
+				} );
+			}
+		}
+		// Retrieve all "fake anchors" within the scope.
+		i = 0;
+
+		while ( ( item = imgs.getItem( i++ ) ) ) {
+			if ( ( item = this.tryRestoreFakeAnchor( editor, item ) ) ) {
+				anchors.push( {
+					name: item.getAttribute( 'name' ),
+					id: item.getAttribute( 'id' )
+				} );
+			}
+		}
+
+		return anchors;
+	},
+
+	/**
+	 * Opera and WebKit do not make it possible to select empty anchors. Fake
 	 * elements must be used for them.
 	 *
 	 * @readonly
+	 * @deprecated 4.3.3 It is set to `true` on every browser.
 	 * @property {Boolean}
 	 */
-	fakeAnchor: CKEDITOR.env.opera || CKEDITOR.env.webkit,
+	fakeAnchor: true,
 
 	/**
-	 * For browsers that don't support CSS3 `a[name]:empty()`, note IE9 is included because of #7783.
+	 * For browsers that do not support CSS3 `a[name]:empty()`. Note that IE9 is included because of #7783.
 	 *
 	 * @readonly
-	 * @property {Boolean}
+	 * @deprecated 4.3.3 It is set to `false` on every browser.
+	 * @property {Boolean} synAnchorSelector
 	 */
-	synAnchorSelector: CKEDITOR.env.ie,
 
 	/**
-	 * For browsers that have editing issue with empty anchor.
+	 * For browsers that have editing issues with an empty anchor.
 	 *
 	 * @readonly
-	 * @property {Boolean}
+	 * @deprecated 4.3.3 It is set to `false` on every browser.
+	 * @property {Boolean} emptyAnchorFix
 	 */
-	emptyAnchorFix: CKEDITOR.env.ie && CKEDITOR.env.version < 8,
 
 	/**
+	 * Returns an element representing a real anchor restored from a fake anchor.
+	 *
 	 * @param {CKEDITOR.editor} editor
 	 * @param {CKEDITOR.dom.element} element
-	 * @todo
+	 * @returns {CKEDITOR.dom.element} Restored anchor element or nothing if the
+	 * passed element was not a fake anchor.
 	 */
 	tryRestoreFakeAnchor: function( editor, element ) {
 		if ( element && element.data( 'cke-real-element-type' ) && element.data( 'cke-real-element-type' ) == 'anchor' ) {
@@ -334,7 +343,7 @@ CKEDITOR.removeAnchorCommand.prototype = {
 		var sel = editor.getSelection(),
 			bms = sel.createBookmarks(),
 			anchor;
-		if ( sel && ( anchor = sel.getSelectedElement() ) && ( CKEDITOR.plugins.link.fakeAnchor && !anchor.getChildCount() ? CKEDITOR.plugins.link.tryRestoreFakeAnchor( editor, anchor ) : anchor.is( 'a' ) ) )
+		if ( sel && ( anchor = sel.getSelectedElement() ) && ( !anchor.getChildCount() ? CKEDITOR.plugins.link.tryRestoreFakeAnchor( editor, anchor ) : anchor.is( 'a' ) ) )
 			anchor.remove( 1 );
 		else {
 			if ( ( anchor = CKEDITOR.plugins.link.getSelectedLink( editor ) ) ) {
@@ -352,16 +361,18 @@ CKEDITOR.removeAnchorCommand.prototype = {
 
 CKEDITOR.tools.extend( CKEDITOR.config, {
 	/**
+	 * Whether to show the Advanced tab in the Link dialog window.
+	 *
 	 * @cfg {Boolean} [linkShowAdvancedTab=true]
 	 * @member CKEDITOR.config
-	 * @todo
 	 */
 	linkShowAdvancedTab: true,
 
 	/**
+	 * Whether to show the Target tab in the Link dialog window.
+	 *
 	 * @cfg {Boolean} [linkShowTargetTab=true]
 	 * @member CKEDITOR.config
-	 * @todo
 	 */
 	linkShowTargetTab: true
 } );

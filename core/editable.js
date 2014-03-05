@@ -97,9 +97,52 @@
 			},
 
 			/**
-			 * Registers an event listener that needs to be removed on detaching.
+			 * Registers an event listener that needs to be removed when detaching this editable.
+			 * This means that it will be automatically removed when {@link #detach} is executed,
+			 * for example on {@link CKEDITOR.editor#setMode changing editor mode} or destroying editor.
 			 *
-			 * @see CKEDITOR.event#on
+			 * Except for `obj` all other arguments have the same meaning as in {@link CKEDITOR.event#on}.
+			 *
+			 * This method is strongly related to the {@link CKEDITOR.editor#contentDom} and
+			 * {@link CKEDITOR.editor#contentDomUnload} events, because they are fired
+			 * when an editable is being attached and detached. Therefore, this method is usually used
+			 * in the following way:
+			 *
+			 *		editor.on( 'contentDom', function() {
+			 *			var editable = editor.editable();
+			 *			editable.attachListener( editable, 'mousedown', function() {
+			 *				// ...
+			 *			} );
+			 *		} );
+			 *
+			 * This code will attach the `mousedown` listener every time a new editable is attached
+			 * to the editor, which in classic (`iframe`-based) editor happens every time the
+			 * data or the mode is set. This listener will also be removed when that editable is detached.
+			 *
+			 * It is also possible to attach a listener to another object (e.g. to a document).
+			 *
+			 *		editor.on( 'contentDom', function() {
+			 *			editor.editable().attachListener( editor.document, 'mousedown', function() {
+			 *				// ...
+			 *			} );
+			 *		} );
+			 *
+			 * @param {CKEDITOR.event} obj The element/object to which the listener will be attached. Every object
+			 * which inherits from {@link CKEDITOR.event} may be used including {@link CKEDITOR.dom.element},
+			 * {@link CKEDITOR.dom.document}, and {@link CKEDITOR.editable}.
+			 * @param {String} eventName The name of the event that will be listened to.
+			 * @param {Function} listenerFunction The function listening to the
+			 * event. A single {@link CKEDITOR.eventInfo} object instance
+			 * containing all the event data is passed to this function.
+			 * @param {Object} [scopeObj] The object used to scope the listener
+			 * call (the `this` object). If omitted, the current object is used.
+			 * @param {Object} [listenerData] Data to be sent as the
+			 * {@link CKEDITOR.eventInfo#listenerData} when calling the listener.
+			 * @param {Number} [priority=10] The listener priority. Lower priority
+			 * listeners are called first. Listeners with the same priority
+			 * value are called in the registration order.
+			 * @returns {Object} An object containing the `removeListener`
+			 * function that can be used to remove the listener at any time.
 			 */
 			attachListener: function( obj, event, fn, scope, listenerData, priority ) {
 				!this._.listeners && ( this._.listeners = [] );
@@ -344,8 +387,7 @@
 				// Set up the correct selection.
 				selection.selectRanges( [ range ] );
 
-				// Do not scroll after inserting, because Opera may fail on certain element (e.g. iframe/iframe.html).
-				afterInsert( this, CKEDITOR.env.opera );
+				afterInsert( this );
 			},
 
 			/**
@@ -491,16 +533,6 @@
 
 				// Update focus states.
 				this.on( 'blur', function( evt ) {
-					// Opera might raise undesired blur event on editable, check if it's
-					// really blurred, otherwise cancel the event. (#9459)
-					if ( CKEDITOR.env.opera ) {
-						var active = CKEDITOR.document.getActive();
-						if ( active.equals( this.isInline() ? this : this.getWindow().getFrame() ) ) {
-							evt.cancel();
-							return;
-						}
-					}
-
 					this.hasFocus = false;
 				}, null, null, -1 );
 
@@ -696,7 +728,7 @@
 				CKEDITOR.env.ie && this.attachListener( this, 'click', blockInputClick );
 
 				// Gecko/Webkit need some help when selecting control type elements. (#3448)
-				if ( !( CKEDITOR.env.ie || CKEDITOR.env.opera ) ) {
+				if ( !CKEDITOR.env.ie ) {
 					this.attachListener( this, 'mousedown', function( ev ) {
 						var control = ev.data.getTarget();
 						if ( control.is( 'img', 'hr', 'input', 'textarea', 'select' ) ) {
@@ -1059,8 +1091,8 @@
 
 			var editable = editor.editable();
 
-			// Setup proper ARIA roles and properties for inline editable, framed
-			// editable is instead handled by plugin.
+			// Setup proper ARIA roles and properties for inline editable, classic
+			// (iframe-based) editable is instead handled by plugin.
 			if ( editable && editable.isInline() ) {
 
 				var ariaLabel = editor.title;
@@ -1784,11 +1816,11 @@
 		editable.editor.fire( 'saveSnapshot' );
 	}
 
-	function afterInsert( editable, noScroll ) {
+	function afterInsert( editable ) {
 		var editor = editable.editor;
 
 		// Scroll using selection, not ranges, to affect native pastes.
-		!noScroll && editor.getSelection().scrollIntoView();
+		editor.getSelection().scrollIntoView();
 
 		// Save snaps after the whole execution completed.
 		// This's a workaround for make DOM modification's happened after

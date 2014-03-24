@@ -14,7 +14,16 @@
 			CKEDITOR.env.gecko ? '-moz-' :
 			CKEDITOR.env.webkit ? '-webkit-' :
 			CKEDITOR.env.ie ? '-ms-' :
-			'';
+			'',
+		ampRegex = /&/g,
+		gtRegex = />/g,
+		ltRegex = /</g,
+		quoteRegex = /"/g,
+
+		ampEscRegex = /&amp;/g,
+		gtEscRegex = /&gt;/g,
+		ltEscRegex = /&lt;/g,
+		quoteEscRegex = /&quot;/g;
 
 	CKEDITOR.on( 'reset', function() {
 		functions = [];
@@ -321,7 +330,7 @@
 		 * @returns {String} The encoded string.
 		 */
 		htmlEncode: function( text ) {
-			return String( text ).replace( /&/g, '&amp;' ).replace( />/g, '&gt;' ).replace( /</g, '&lt;' );
+			return String( text ).replace( ampRegex, '&amp;' ).replace( gtRegex, '&gt;' ).replace( ltRegex, '&lt;' );
 		},
 
 		/**
@@ -333,7 +342,7 @@
 		 * @returns {String} The decoded string.
 		 */
 		htmlDecode: function( text ) {
-			return text.replace( /&amp;/g, '&' ).replace( /&gt;/g, '>' ).replace( /&lt;/g, '<' );
+			return text.replace( ampEscRegex, '&' ).replace( gtEscRegex, '>' ).replace( ltEscRegex, '<' );
 		},
 
 		/**
@@ -345,7 +354,7 @@
 		 * @returns {String} The encoded value.
 		 */
 		htmlEncodeAttr: function( text ) {
-			return text.replace( /"/g, '&quot;' ).replace( /</g, '&lt;' ).replace( />/g, '&gt;' );
+			return text.replace( quoteRegex, '&quot;' ).replace( ltRegex, '&lt;' ).replace( gtRegex, '&gt;' );
 		},
 
 		/**
@@ -359,7 +368,7 @@
 		 * @returns {String} The decoded text.
 		 */
 		htmlDecodeAttr: function( text ) {
-			return text.replace( /&quot;/g, '"' ).replace( /&lt;/g, '<' ).replace( /&gt;/g, '>' );
+			return text.replace( quoteEscRegex, '"' ).replace( ltEscRegex, '<' ).replace( gtEscRegex, '>' );
 		},
 
 		/**
@@ -1129,9 +1138,41 @@
 		},
 
 		/**
+		 * Checks if any of the `arr` items match provided regular expression.
+		 *
+		 * @param {Array} arr The array which items will be checked.
+		 * @param {RegExp} regexp The regular expression.
+		 * @returns {Boolean} Returns `true` for the first occurrence of searched pattern.
+		 * @since 4.4
+		 */
+		checkIfAnyArrayItemMatches: function( arr, regexp ) {
+			for ( var i = 0, l = arr.length; i < l; ++i ) {
+				if ( arr[ i ].match( regexp ) )
+					return true;
+			}
+			return false;
+		},
+
+		/**
+		 * Checks if any of the `obj` properties match provided regular expression.
+		 *
+		 * @param obj The object which properties will be checked.
+		 * @param {RegExp} regexp The regular expression.
+		 * @returns {Boolean} Returns `true` for the first occurrence of searched pattern.
+		 * @since 4.4
+		 */
+		checkIfAnyObjectPropertyMatches: function( obj, regexp ) {
+			for ( var i in obj ) {
+				if ( i.match( regexp ) )
+					return true;
+			}
+			return false;
+		},
+
+		/**
 		 * The data URI of a transparent image. May be used e.g. in HTML as an image source or in CSS in `url()`.
 		 *
-		 * @since 4.3.1
+		 * @since 4.4
 		 * @readonly
 		 */
 		transparentImageData: 'data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=='

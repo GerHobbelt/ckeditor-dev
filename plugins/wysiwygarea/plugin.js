@@ -104,14 +104,14 @@
 	} );
 
 	/**
-	 * Adds given stylesheet file path to the exisiting {@link CKEDITOR.config#contentsCss} value.
+	 * Adds the path to a stylesheet file to the exisiting {@link CKEDITOR.config#contentsCss} value.
 	 *
-	 * **Note:** This method is available only with the `wysiwygarea` plugin and affects
-	 * only editors based on it (e.g. not inline editors).
+	 * **Note:** This method is available only with the `wysiwygarea` plugin and only affects
+	 * classic editors based on it (e.g. it does not affect inline editors).
 	 *
 	 *		editor.addContentsCss( 'assets/contents.css' );
 	 *
-	 * @param {String} cssPath Path to the stylesheet file which should be added.
+	 * @param {String} cssPath The path to the stylesheet file which should be added.
 	 * @member CKEDITOR.editor
 	 */
 	CKEDITOR.editor.prototype.addContentsCss = function( cssPath ) {
@@ -299,6 +299,10 @@
 			editor.document.$.title = this._.docTitle;
 
 		CKEDITOR.tools.setTimeout( function() {
+			// Editable is ready after first setData.
+			if ( this.status == 'unloaded' )
+				this.status = 'ready';
+
 			editor.fire( 'contentDom' );
 
 			if ( this._.isPendingFocus ) {

@@ -1867,8 +1867,8 @@
 							if ( upcasted instanceof CKEDITOR.htmlParser.element )
 								element = upcasted;
 
-							// Set initial data attr with data from upcast method.
-							element.attributes[ 'data-cke-widget-data' ] = JSON.stringify( data );
+							// Set initial data attr with data from upcast method. We need to encode JSON because of #11777.
+							element.attributes[ 'data-cke-widget-data' ] = CKEDITOR.tools.htmlEncode( JSON.stringify( data ) );
 							element.attributes[ 'data-cke-widget-upcasted' ] = 1;
 
 							toBeWrapped.push( [ element, upcast[ 1 ] ] );

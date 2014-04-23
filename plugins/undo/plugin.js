@@ -38,11 +38,22 @@
 				canUndo: false
 			} );
 
+			var keystrokes = [ CKEDITOR.CTRL + 90 /*Z*/, CKEDITOR.CTRL + 89 /*Y*/, CKEDITOR.CTRL + CKEDITOR.SHIFT + 90 /*Z*/ ];
+
 			editor.setKeystroke( [
-				[ CKEDITOR.CTRL + 90 /*Z*/, 'undo' ],
-				[ CKEDITOR.CTRL + 89 /*Y*/, 'redo' ],
-				[ CKEDITOR.CTRL + CKEDITOR.SHIFT + 90 /*Z*/, 'redo' ]
+				[ keystrokes[ 0 ], 'undo' ],
+				[ keystrokes[ 1 ], 'redo' ],
+				[ keystrokes[ 2 ], 'redo' ]
 			] );
+
+			// Block undo/redo keystrokes when at the bottom/top of the undo stack (#11126 and #11677).
+			editor.on( 'contentDom', function() {
+				var editable = editor.editable();
+				editable.attachListener( editable, 'keydown', function( evt ) {
+					if ( CKEDITOR.tools.indexOf( keystrokes, evt.data.getKeystroke() ) > -1 )
+						evt.data.preventDefault();
+				} );
+			} );
 
 			undoManager.onChange = function() {
 				undoCommand.setState( undoManager.undoable() ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED );
@@ -158,10 +169,10 @@
 			 * @member CKEDITOR.editor
  			 * @param {CKEDITOR.editor} editor This editor instance.
 			 * @param data
-			 * @param {Boolean} [data.dontUpdate] When set to `true` the last snapshot will not be updated
-			 * with the current contents and selection. Read more in the {@link CKEDITOR.plugins.undo.UndoManager#lock} method.
-			 * @param {Boolean} [data.forceUpdate] When set to `true` the last snapshot will always be updated
-			 * with the current contents and selection. Read more in the {@link CKEDITOR.plugins.undo.UndoManager#lock} method.
+			 * @param {Boolean} [data.dontUpdate] When set to `true`, the last snapshot will not be updated
+			 * with the current content and selection. Read more in the {@link CKEDITOR.plugins.undo.UndoManager#lock} method.
+			 * @param {Boolean} [data.forceUpdate] When set to `true`, the last snapshot will always be updated
+			 * with the current content and selection. Read more in the {@link CKEDITOR.plugins.undo.UndoManager#lock} method.
 			 */
 			editor.on( 'lockSnapshot', function( evt ) {
 				var data = evt.data;
@@ -635,11 +646,11 @@
 		 * done during the lock will be merged into the previous snapshot or the next one. Use this option to gain
 		 * more control over this behavior. For example, it is possible to group changes done during the lock into
 		 * a separate snapshot.
-		 * @param {Boolean} [forceUpdate] When set to `true` the last snapshot will always be updated with the
-		 * current contents and selection regardless of the current state of undo manager.
-		 * When not set the last snapshot will be updated only if undo manager was up to date when locking.
-		 * Additionally, this option makes it possible to lock snapshot when editor is not in `wysiwyg` mode,
-		 * because when it's passed snapshots will not need to be compared.
+		 * @param {Boolean} [forceUpdate] When set to `true`, the last snapshot will always be updated with the
+		 * current content and selection regardless of the current state of the undo manager.
+		 * When not set, the last snapshot will be updated only if the undo manager was up to date when locking.
+		 * Additionally, this option makes it possible to lock the snapshot when the editor is not in the `wysiwyg` mode,
+		 * because when it is passed, the snapshots will not need to be compared.
 		 */
 		lock: function( dontUpdate, forceUpdate ) {
 			if ( !this.locked ) {

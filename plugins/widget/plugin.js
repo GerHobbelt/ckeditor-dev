@@ -14,7 +14,7 @@
 	var DRAG_HANDLER_SIZE = 15;
 
 	CKEDITOR.plugins.add( 'widget', {
-		lang: 'ar,ca,cs,cy,de,el,en,en-gb,es,fa,fi,fr,gl,he,hr,hu,it,ja,km,ko,nb,nl,no,pl,pt,pt-br,ru,sl,sv,tt,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
+		lang: 'ar,ca,cs,cy,de,el,en,en-gb,eo,es,fa,fi,fr,gl,he,hr,hu,it,ja,km,ko,nb,nl,no,pl,pt,pt-br,ru,sl,sv,tt,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
 		requires: 'lineutils,clipboard',
 		onLoad: function() {
 			CKEDITOR.addCss(
@@ -3091,7 +3091,7 @@
 		var widgetDataAttr = widget.element.data( 'cke-widget-data' );
 
 		if ( widgetDataAttr )
-			widget.setData( JSON.parse( widgetDataAttr ) );
+			widget.setData( JSON.parse( decodeURIComponent( widgetDataAttr ) ) );
 		if ( startupData )
 			widget.setData( startupData );
 
@@ -3116,7 +3116,7 @@
 	}
 
 	function writeDataToElement( widget ) {
-		widget.element.data( 'cke-widget-data', JSON.stringify( widget.data ) );
+		widget.element.data( 'cke-widget-data', encodeURIComponent( JSON.stringify( widget.data ) ) );
 	}
 
 	//

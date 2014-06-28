@@ -364,7 +364,7 @@ CKEDITOR.dialog.add( 'image2', function( editor ) {
 			id: 'browse',
 			// v-align with the 'txtUrl' field.
 			// TODO: We need something better than a fixed size here.
-			style: 'display:inline-block;margin-top:16px;',
+			style: 'display:inline-block;margin-top:14px;',
 			align: 'center',
 			label: editor.lang.common.browseServer,
 			hidden: true,
@@ -492,10 +492,10 @@ CKEDITOR.dialog.add( 'image2', function( editor ) {
 								id: 'align',
 								type: 'radio',
 								items: [
-									[ 'None', 'none' ],
-									[ 'Left', 'left' ],
-									[ 'Center', 'center' ],
-									[ 'Right', 'right' ] ],
+									[ commonLang.alignNone, 'none' ],
+									[ commonLang.alignLeft, 'left' ],
+									[ commonLang.alignCenter, 'center' ],
+									[ commonLang.alignRight, 'right' ] ],
 								label: commonLang.align,
 								setup: function( widget ) {
 									this.setValue( widget.data.align );

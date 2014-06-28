@@ -415,20 +415,31 @@
 		 * @param {Boolean} [checkWrapperOnly] If set to `true`, the method will not check wrappers' descendants.
 		 * @returns {CKEDITOR.plugins.widget} The widget instance or `null`.
 		 */
-		getByElement: function( element, checkWrapperOnly ) {
-			if ( !element )
-				return null;
-
-			var wrapper;
-
-			for ( var id in this.instances ) {
-				wrapper = this.instances[ id ].wrapper;
-				if ( wrapper.equals( element ) || ( !checkWrapperOnly && wrapper.contains( element ) ) )
-					return this.instances[ id ];
+		getByElement: ( function() {
+			var validWrapperElements = { div: 1, span: 1 };
+			function getWidgetId( element ) {
+				return element.is( validWrapperElements ) && element.data( 'cke-widget-id' );
 			}
 
-			return null;
-		},
+			return function( element, checkWrapperOnly ) {
+				if ( !element )
+					return null;
+
+				var id = getWidgetId( element );
+
+				// There's no need to check element parents if element is a wrapper.
+				if ( !checkWrapperOnly && !id ) {
+					var limit = this.editor.editable();
+
+					// Try to find a closest ascendant which is a widget wrapper.
+					do {
+						element = element.getParent();
+					} while ( element && !element.equals( limit ) && !( id = getWidgetId( element ) ) );
+				}
+
+				return this.instances[ id ] || null;
+			};
+		} )(),
 
 		/**
 		 * Initializes a widget on a given element if the widget has not been initialized on it yet.
@@ -485,6 +496,7 @@
 		 * @param {CKEDITOR.dom.element} [container=editor.editable()] The container which will be checked for not
 		 * initialized widgets. Defaults to editor's {@link CKEDITOR.editor#editable editable} element.
 		 * @returns {CKEDITOR.plugins.widget[]} Array of widget instances which have been initialized.
+		 * Note: only first level widgets are returned &ndash; without nested widgets.
 		 */
 		initOnAll: function( container ) {
 			var newWidgets = ( container || this.editor.editable() ).find( '.cke_widget_new' ),
@@ -1500,6 +1512,8 @@
 				enterMode: this.enterMode
 			} );
 			this.setHtml( data );
+
+			this.editor.widgets.initOnAll( this );
 		},
 
 		/**
@@ -2001,6 +2015,11 @@
 	// @param {CKEDITOR.dom.element}
 	function isDomDragHandler( element ) {
 		return element.type == CKEDITOR.NODE_ELEMENT && element.hasAttribute( 'data-cke-widget-drag-handler' );
+	}
+
+	// @param {CKEDITOR.dom.element}
+	function isDomDragHandlerContainer( element ) {
+		return element.type == CKEDITOR.NODE_ELEMENT && element.hasClass( 'cke_widget_drag_handler_container' );
 	}
 
 	function finalizeNativeDrop( editor, sourceWidget, range ) {
@@ -2838,7 +2857,8 @@
 			return;
 
 		var editor = widget.editor,
-			container = widget.wrapper.findOne( '.cke_widget_drag_handler_container' ),
+			// Use getLast to find wrapper's direct descendant (#12022).
+			container = widget.wrapper.getLast( isDomDragHandlerContainer ),
 			img;
 
 		// Reuse drag handler if already exists (#11281).

@@ -1,6 +1,19 @@
 CKEditor 4 Changelog
 ====================
 
+## CKEditor 4.5
+
+New Features:
+
+* [#10931](http://dev.ckeditor.com/ticket/10931): Introduce ability to insert widgets into another widget's nested editables. Note that unless nested editable's [allowed content](http://docs.ckeditor.com/#!/api/CKEDITOR.plugins.widget.nestedEditable.definition-property-allowedContent) is defined precisely since CKEditor 4.5 some widget buttons may become enabled.
+
+Fixed Issues:
+
+* [#12018](http://dev.ckeditor.com/ticket/12018): [Nested widgets] Fixed and reviewed: Nested widgets garbage collection.
+* [#12024](http://dev.ckeditor.com/ticket/12024): [Nested widgets][FF] Fixed: Outline is extended to the left by unpositioned drag handlers.
+* [#12006](http://dev.ckeditor.com/ticket/12006): [Nested widgets] Fixed: Drag and drop of nested block widgets.
+* [#12008](http://dev.ckeditor.com/ticket/12008): Fixed various cases of inserting single non-editable element using [`editor.insertHtml()`](http://docs.ckeditor.com/#!/api/CKEDITOR.editor-method-insertHtml) method. Fixes pasting widget with nested editable inside other widget's nested editable.
+
 ## CKEditor 4.4.3
 
 Fixed Issues:

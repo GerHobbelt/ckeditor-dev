@@ -46,7 +46,6 @@ var CKBUILDER_CONFIG = {
 		horizontalrule: 1,
 		htmlwriter: 1,
 		iframe: 1,
-		image: 1,
 		indentlist: 1,
 		indentblock: 1,
 		justify: 1,
@@ -77,6 +76,11 @@ var CKBUILDER_CONFIG = {
 		templates: 1,
 		toolbar: 1,
 		undo: 1,
-		wysiwygarea: 1
+		wysiwygarea: 1,
+		lineutils: 1,
+		widget: 1,
+		divarea: 1,
+		oembed: 1,
+		image3: 1
 	}
 };

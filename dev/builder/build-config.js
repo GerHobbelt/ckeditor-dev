@@ -4,7 +4,7 @@
  */
 
 var CKBUILDER_CONFIG = {
-	skin: 'moono',
+	skin: 'bootstrapck',
 	ignore: [
 		'dev',
 		'README.md',
@@ -36,16 +36,16 @@ var CKBUILDER_CONFIG = {
 		elementspath: 1,
 		enterkey: 1,
 		entities: 1,
-		filebrowser: 1,
+		filebrowser: 0,
 		find: 1,
-		flash: 1,
+		flash: 0,
 		floatingspace: 1,
 		font: 1,
 		format: 1,
-		forms: 1,
+		forms: 0,
 		horizontalrule: 1,
 		htmlwriter: 1,
-		iframe: 1,
+		iframe: 0,
 		indentlist: 1,
 		indentblock: 1,
 		justify: 1,
@@ -73,7 +73,7 @@ var CKBUILDER_CONFIG = {
 		tab: 1,
 		table: 1,
 		tabletools: 1,
-		templates: 1,
+		templates: 0,
 		toolbar: 1,
 		undo: 1,
 		wysiwygarea: 1,

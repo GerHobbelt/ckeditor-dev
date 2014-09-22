@@ -3,7 +3,7 @@
   "version": "4.4.4",
   "homepage": "https://github.com/Axonn/ckeditor-dev",
   "description": "Agoraa version of ckeditor",
-  "main": "/release/",
+  "main": "/release/**",
   "private": true,
   "ignore": [
     "**/.*",

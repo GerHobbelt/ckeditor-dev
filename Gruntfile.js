@@ -8,7 +8,7 @@ module.exports = function(grunt) {
                     'dev/builder/release/ckeditor/lang/en-gb.js',
                     'dev/builder/release/ckeditor/plugins/image3/{,*/}*.js',
                 ],
-                dest: 'release/ckeditor/ckeditor.js'
+                dest: 'dist/ckeditor.js'
             }
         }, 
         copy: {        
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
                       'plugins/pastefromword/**',
                       'plugins/scayt/**',
                       'plugins/specialchar/**'],
-                dest: 'release/ckeditor'
+                dest: 'dist/'
             }
         }
     });

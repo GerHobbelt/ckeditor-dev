@@ -1,0 +1,15 @@
+{
+  "name": "ckeditor-agoraa",
+  "version": "4.4.4",
+  "homepage": "https://github.com/Axonn/ckeditor-dev",
+  "description": "Agoraa version of ckeditor",
+  "main": "/release/",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

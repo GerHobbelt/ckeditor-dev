@@ -5,9 +5,10 @@ module.exports = function(grunt) {
             dist: {
                 src: [
                     'dev/builder/release/ckeditor/ckeditor.js',
+                    'dev/builder/release/ckeditor/lang/en-gb.js',
                     'dev/builder/release/ckeditor/plugins/image3/{,*/}*.js',
                 ],
-                dest: 'dev/builder/release/ckeditor/ckeditor.min.js'
+                dest: 'dev/builder/release/ckeditor/ckeditor.js'
             }
         }, 
         copy: {        

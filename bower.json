@@ -1,9 +1,9 @@
 {
   "name": "ckeditor-agoraa",
-  "version": "4.4.4",
+  "version": "4.4.5",
   "homepage": "https://github.com/Axonn/ckeditor-dev",
   "description": "Agoraa version of ckeditor",
-  "main": "/release/**",
+  "main": "release/**",
   "private": true,
   "ignore": [
     "**/.*",

@@ -1,3 +1,12 @@
+#Agoraa Ckeditor
+##To create a new release
+1. Make necessary changes to ckeditor e.g. plugins or skins
+2. Navigate to dev/builder and run build.sh to build ckeditor. If on Windows you can use Git Bash to run it.
+3. You can open "\dev\builder\ckeditorTester.html" to test the built ckeditor
+4. Run ```grunt build```. This will copy necessary files to /dist
+5. Run ```grunt release``` (see more info here [https://github.com/geddski/grunt-release](https://github.com/geddski/grunt-release))
+6. All that remains will be to update the version in bower.json in the app that is using ckeditor and run ```bower install```
+
 CKEditor 4 - The best browser-based WYSIWYG editor
 ==================================================
 

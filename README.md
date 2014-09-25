@@ -3,7 +3,7 @@ Agoraa CKEditor
 > The Agoraa version of CKEditor - JavaScript WYSIWYG web text editor.
 
 ## Install
-```bower install Axonn/ckeditor-agoraa --save-dev```
+```bower install Axonn/ckeditor-agoraa --save```
 
 ##To create a new release
 1. Make necessary changes to ckeditor e.g. plugins or skins on **agoraa-master** or another branch

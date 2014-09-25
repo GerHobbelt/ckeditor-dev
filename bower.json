@@ -6,7 +6,7 @@
   "main": "dist/ckeditor.js",
   "private": true,
   "ignore": [
-    "**/.*",    
+    "**/.*",
     "/CHANGES.md",
     "/Gruntfile.js",
     "/LICENSE.md",

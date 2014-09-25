@@ -1,5 +1,6 @@
 ﻿'use strict';
 module.exports = function(grunt) {
+  require('load-grunt-tasks')(grunt);
     grunt.initConfig({
         concat: {
             dist: {
@@ -34,12 +35,23 @@ module.exports = function(grunt) {
                       'plugins/specialchar/**'],
                 dest: 'dist/'
             }
+        },
+        shell: {
+          options: {
+              stderr: false,
+              execOptions: {
+                cwd: 'dev/builder/'
+              }
+          },
+          target: {
+              command: 'build.sh'
+          }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.registerTask('default', ['concat', 'copy']);
+    grunt.registerTask('default', ['shell', 'concat', 'copy']);
     grunt.registerTask('build', ['default']);
 
 }

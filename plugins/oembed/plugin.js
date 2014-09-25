@@ -10,7 +10,7 @@
     function repairHtmlOutput(provider, oldOutput, width, height) {
         switch (provider) {
             case "SlideShare":
-                return oldOutput.replace(/width=\"\d+\" height=\"\d+\"/, "width=\"" + width + "\" height=\"" + height + "\"");
+                return oldOutput.replace(/width=\"\d+\" height=\"\d+\"/, "width=\"" + width + "\" height=\"" + height + "\"").replace(/http:/, "https:");
             case "Spotify":
                 return oldOutput.replace(/width=\"\d+\" height=\"\d+\"/, "width=\"" + width + "\" height=\"" + height + "\"");
             default:

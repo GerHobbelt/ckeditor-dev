@@ -1,11 +1,12 @@
 #Agoraa Ckeditor
 ##To create a new release
-1. Make necessary changes to ckeditor e.g. plugins or skins
-2. Navigate to dev/builder and run build.sh to build ckeditor. If on Windows you can use Git Bash to run it.
-3. You can open "\dev\builder\ckeditorTester.html" to test the built ckeditor
-4. Run ```grunt build```. This will copy necessary files to /dist
-5. Run ```grunt release``` (see more info here [https://github.com/geddski/grunt-release](https://github.com/geddski/grunt-release))
-6. All that remains will be to update the version in bower.json in the app that is using ckeditor and run ```bower install```
+1. Make necessary changes to ckeditor e.g. plugins or skins on **agoraa-master** or another branch
+2. If changing ckeditor config (adding or removing a plugin/changing skin) please change build-config.js located at /dev/builder/build-config.js
+3. Run ```grunt build``` to build a release version of ckeditor. This will run /dev/builder/build.sh and copy necessary files to /dist for bower installs
+4. You can open "\dev\builder\ckeditorTester.html" to test the built ckeditor
+5. Commit your changes including /dist changes and merge into agoraa-master if on another branch
+6. Run ```grunt release``` (see more info here [https://github.com/geddski/grunt-release](https://github.com/geddski/grunt-release)) to automatically increment patch version in package.json, tag and push to github. Other options include ```grunt release:minor```, ```grunt release:major``` and ```grunt release:prerelease```
+7. All that remains will be to update the version in bower.json in the app that is using ckeditor and run ```bower install```
 
 CKEditor 4 - The best browser-based WYSIWYG editor
 ==================================================
@@ -73,10 +74,10 @@ builder, for its first time at least.
 
 ### Testing Environment
 
-Read more how to set up the environment and execute tests in the [CKEditor Testing Environment](http://docs.ckeditor.com/#!/guide/dev_tests) guide.
+Read more on how to set up the environment and execute tests in the [CKEditor Testing Environment](http://docs.ckeditor.com/#!/guide/dev_tests) guide.
 
 ### License
 
 Licensed under the GPL, LGPL and MPL licenses, at your choice.
 
-For full details about license, please check the LICENSE.md file.
+For full details about the license, please check the LICENSE.md file.

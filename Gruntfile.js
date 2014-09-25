@@ -46,12 +46,17 @@ module.exports = function(grunt) {
           target: {
               command: 'build.sh'
           }
-        }
+        },
+         release: {
+            options: {
+              npm: false,
+              file: 'bower.json'
+            }
+          } 
     });
 
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.registerTask('default', ['shell', 'concat', 'copy']);
     grunt.registerTask('build', ['default']);
-
 }

@@ -6,7 +6,6 @@ module.exports = function(grunt) {
             dist: {
                 src: [
                     'dev/builder/release/ckeditor/ckeditor.js',
-                    'dev/builder/release/ckeditor/lang/en-gb.js',
                     'dev/builder/release/ckeditor/plugins/image3/{,*/}*.js',
                 ],
                 dest: 'dist/ckeditor.js'
@@ -16,7 +15,11 @@ module.exports = function(grunt) {
             dist: {
                 expand: true,     
                 cwd: 'dev/builder/release/ckeditor',
-                src: ['skins/bootstrapck/**', 
+                src: ['skins/bootstrapck/**',
+                      'lang/en-gb.js', 
+                      'lang/en.js', 
+                      'config.js', 
+                      'styles.js', 
                       'plugins/a11yhelp/**',
                       'plugins/agaddimage/**',
                       'plugins/aguploadfile/**',

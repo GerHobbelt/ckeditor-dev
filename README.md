@@ -8,7 +8,7 @@ Agoraa CKEditor
 ##To create a new release
 1. Make necessary changes to ckeditor e.g. plugins or skins on **agoraa-master** or another branch
 2. If changing ckeditor config (adding or removing a plugin/changing skin) please change build-config.js located at /dev/builder/build-config.js
-3. Run ```grunt build``` to build a release version of ckeditor. This will run /dev/builder/build.sh and copy necessary files to /dist for bower installs
+3. Run ```grunt build``` to build a release version of ckeditor. This will run /dev/builder/build.sh and copy necessary files to /dist for bower installs. NOTE: If you get error ```basename: too many arguments``` move your repo to a path that has no spaces and retry.
 4. You can open "\ckeditorTester.html" to test the built ckeditor
 5. Commit your changes including /dist changes and merge into agoraa-master if on another branch
 6. Run ```grunt release``` (see more info here [https://github.com/geddski/grunt-release](https://github.com/geddski/grunt-release)) to automatically increment patch version in bower.json, tag and push to github. Other options include ```grunt release:minor```, ```grunt release:major``` and ```grunt release:prerelease```

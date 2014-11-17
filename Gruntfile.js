@@ -35,6 +35,7 @@ module.exports = function(grunt) {
                       'plugins/oembed/**',
                       'plugins/pastefromword/**',
                       'plugins/scayt/**',
+                      'plugins/widget/**',
                       'plugins/specialchar/**'],
                 dest: 'dist/'
             }

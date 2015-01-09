@@ -1,6 +1,6 @@
 Agoraa CKEditor
 ===============
-> The Agoraa version of CKEditor - JavaScript WYSIWYG web text editor.
+> The [Agoraa](http://www.axonn.co.uk/agoraa) version of CKEditor - JavaScript WYSIWYG web text editor.
 
 ## Install
 ```bower install Axonn/ckeditor-agoraa --save```

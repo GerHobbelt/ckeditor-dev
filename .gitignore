@@ -2,6 +2,7 @@ node_modules
 bower_components
 .bender/*
 bender-*.log
+plugins/oembed
 
 #ignore thumbnails created by windows
 Thumbs.db

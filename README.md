@@ -6,13 +6,19 @@ Agoraa CKEditor
 ```bower install Axonn/ckeditor-agoraa --save```
 
 ##To create a new release
-1. Make necessary changes to ckeditor e.g. plugins or skins on **agoraa-master** or another branch
-2. If changing ckeditor config (adding or removing a plugin/changing skin) please change build-config.js located at /dev/builder/build-config.js
-3. Run ```grunt build``` to build a release version of ckeditor. This will run /dev/builder/build.sh and copy necessary files to /dist for bower installs. NOTE: If you get error ```basename: too many arguments``` move your repo to a path that has no spaces and retry.
-4. You can open "\ckeditorTester.html" to test the built ckeditor
-5. Commit your changes including /dist changes and merge into agoraa-master if on another branch
-6. Run ```grunt release``` (see more info here [https://github.com/geddski/grunt-release](https://github.com/geddski/grunt-release)) to automatically increment patch version in bower.json, tag and push to github. Other options include ```grunt release:minor```, ```grunt release:major``` and ```grunt release:prerelease``` NOTE: Ensure you have git added to your path
-7. All that remains will be to update the version in bower.json in the app that is using ckeditor and run ```bower install```
+1. Run `npm install`
+2. Run `bower install`
+3. Make necessary changes to ckeditor e.g. plugins or skins on **agoraa-master** or another branch
+4. If changing ckeditor config (adding or removing a plugin/changing skin) please change build-config.js located at /dev/builder/build-config.js
+5. Run ```grunt build``` to build a release version of ckeditor. This will run /dev/builder/build.sh and copy necessary files to /dist for bower installs. NOTE: If you get error ```basename: too many arguments``` move your repo to a path that has no spaces and retry.
+6. You can open "\ckeditorTester.html" to test the built ckeditor
+7. Commit your changes including /dist changes and merge into agoraa-master if on another branch
+8. Run ```grunt release``` (see more info here [https://github.com/geddski/grunt-release](https://github.com/geddski/grunt-release)) to automatically increment patch version in bower.json, tag and push to github. Other options include ```grunt release:minor```, ```grunt release:major``` and ```grunt release:prerelease``` NOTE: Ensure you have git added to your path
+9. All that remains will be to update the version in bower.json in the app that is using ckeditor and run ```bower install```
+
+##Plugins
+* OEmbed plugin
+See [https://github.com/Axonn/ckeditor-oembed-plugin](https://github.com/Axonn/ckeditor-oembed-plugin) for Agoraa forked version
 
 CKEditor 4 - The best browser-based WYSIWYG editor
 ==================================================

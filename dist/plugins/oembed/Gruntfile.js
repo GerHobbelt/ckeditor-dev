@@ -1,0 +1,1 @@
+﻿module.exports=function(a){require("load-grunt-tasks")(a);a.initConfig({release:{options:{npm:!1,file:"bower.json"}}});a.registerTask("default",["release"])};

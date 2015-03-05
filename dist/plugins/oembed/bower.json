@@ -1,0 +1,19 @@
+{
+  "name": "ckeditor-oembed-plugin-agoraa",
+  "version": "1.17.2",
+  "homepage": "https://github.com/Axonn/CKEditor-oEmbed-Plugin",
+  "authors": [
+    "http://www.axonn.co.uk/"
+  ],
+  "description": "Agoraa version of the CKEditor oEmbed plugin",
+  "main": "plugin.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

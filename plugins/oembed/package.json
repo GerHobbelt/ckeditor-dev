@@ -1,0 +1,16 @@
+{
+  "name": "CKEditor-oEmbed-Plugin",
+  "version": "1.17.0",
+  "description": "CKEditor-oEmbed-Plugin",
+  "main": "plugin.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Axonn/CKEditor-oEmbed-Plugin.git"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-release": "~0.11.0"
+  }
+}

@@ -11,7 +11,13 @@ module.exports = function(grunt) {
                 dest: 'dist/ckeditor.js'
             }
         }, 
-        copy: {        
+        copy: {
+            oembed: {
+                expand: true,     
+              cwd: 'bower_components/ckeditor-oembed-plugin-agoraa',
+              src: '**',
+              dest: 'plugins/oembed'
+            },        
             dist: {
                 expand: true,     
                 cwd: 'dev/builder/release/ckeditor',

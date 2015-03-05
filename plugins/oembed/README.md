@@ -1,6 +1,9 @@
 CKEditor-oEmbed-Plugin
 ======================
 
+####Axonn Agoraa changes
+* Adds resize functionality from image2 plugin
+
 oEmbed Plugin for CKEditor
 
 This Plugin allows to insert embedded content (such as photos, videos, audio, and other rich media) via the OEmbed API. You only have to provide the url to the site (It works also when the url is shortened) you want to embed and the plugin does the rest.

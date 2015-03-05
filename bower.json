@@ -29,5 +29,8 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "ckeditor-oembed-plugin-agoraa": "Axonn/ckeditor-oembed-plugin#~1.17.2"
+  }
 }

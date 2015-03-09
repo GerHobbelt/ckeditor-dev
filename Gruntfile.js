@@ -67,6 +67,6 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.registerTask('default', ['shell', 'concat', 'copy']);
+    grunt.registerTask('default', ['copy:oembed','shell', 'concat', 'copy:dist']);
     grunt.registerTask('build', ['default']);
 }

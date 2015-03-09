@@ -1,6 +1,6 @@
 {
   "name": "ckeditor-agoraa",
-  "version": "4.4.8",
+  "version": "4.4.9",
   "homepage": "https://github.com/Axonn/ckeditor-dev",
   "description": "The agoraa version of CKEditor - JavaScript WYSIWYG web text editor.",
   "main": "dist/ckeditor.js",
@@ -31,6 +31,6 @@
     "tests"
   ],
   "dependencies": {
-    "ckeditor-oembed-plugin-agoraa": "Axonn/ckeditor-oembed-plugin#~1.17.2"
+    "ckeditor-oembed-plugin-agoraa": "Axonn/ckeditor-oembed-plugin#1.17.3"
   }
 }

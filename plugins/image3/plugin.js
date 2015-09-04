@@ -424,7 +424,7 @@
 				// Don't initialize resizer when dimensions are disallowed (#11004).
 				if ( editor.filter.checkFeature( this.features.dimension ) )
 				    setupResizer(this);
-			    
+
 			    if (CKEDITOR.plugins.widget.initFunc) {
 					for (var i = 0; i < CKEDITOR.plugins.widget.initFunc.length; i++) {
 					    CKEDITOR.plugins.widget.initFunc[i](this);
@@ -899,6 +899,8 @@
 
 		// @param {CKEDITOR.htmlParser.element} el
 		return function( el ) {
+			if (!el) return el;
+
 			// In case of <a><img/></a>, <img/> is the element to hold
 			// inline styles or classes (image3_alignClasses).
 			var attrsHolder = el.name == 'a' ? el.getFirst() : el,

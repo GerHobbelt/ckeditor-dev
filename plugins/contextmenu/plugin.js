@@ -1,11 +1,14 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
 CKEDITOR.plugins.add( 'contextmenu', {
 	requires: 'menu',
-	lang: 'af,ar,bg,bn,bs,ca,cs,cy,da,de,el,en,en-au,en-ca,en-gb,eo,es,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
+
+	// jscs:disable maximumLineLength
+	lang: 'af,ar,bg,bn,bs,ca,cs,cy,da,de,el,en,en-au,en-ca,en-gb,eo,es,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
+	// jscs:enable maximumLineLength
 
 	// Make sure the base class (CKEDITOR.menu) is loaded before it (#3318).
 	onLoad: function() {
@@ -56,6 +59,19 @@ CKEDITOR.plugins.add( 'contextmenu', {
 
 						// Cancel the browser context menu.
 						domEvent.preventDefault();
+
+						// Fix selection when non-editable element in Webkit/Blink (Mac) (#11306).
+						if ( CKEDITOR.env.mac && CKEDITOR.env.webkit ) {
+							var editor = this.editor,
+								contentEditableParent = new CKEDITOR.dom.elementPath( domEvent.getTarget(), editor.editable() ).contains( function( el ) {
+									// Return when non-editable or nested editable element is found.
+									return el.hasAttribute( 'contenteditable' );
+								}, true ); // Exclude editor's editable.
+
+							// Fake selection for non-editables only (to exclude nested editables).
+							if ( contentEditableParent && contentEditableParent.getAttribute( 'contenteditable' ) == 'false' )
+								editor.getSelection().fake( contentEditableParent );
+						}
 
 						var doc = domEvent.getTarget().getDocument(),
 							offsetParent = domEvent.getTarget().getDocument().getDocumentElement(),

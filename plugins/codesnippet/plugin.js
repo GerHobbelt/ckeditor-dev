@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -14,7 +14,7 @@
 
 	CKEDITOR.plugins.add( 'codesnippet', {
 		requires: 'widget,dialog',
-		lang: 'bg,ca,cs,da,de,el,en,en-gb,eo,es,et,fa,fr,fr-ca,hr,hu,it,ja,ku,lt,lv,nb,nl,no,pl,pt,ro,ru,sk,sl,sq,sv,th,tt,ug,uk,vi', // %REMOVE_LINE_CORE%
+		lang: 'ar,bg,ca,cs,da,de,el,en,en-gb,eo,es,et,fa,fi,fr,fr-ca,gl,he,hr,hu,it,ja,km,ko,ku,lt,lv,nb,nl,no,pl,pt,pt-br,ro,ru,sk,sl,sq,sv,th,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
 		icons: 'codesnippet', // %REMOVE_LINE_CORE%
 		hidpi: true, // %REMOVE_LINE_CORE%
 
@@ -24,6 +24,12 @@
 			/**
 			 * Sets the custom syntax highlighter. See {@link CKEDITOR.plugins.codesnippet.highlighter}
 			 * to learn how to register a custom highlighter.
+			 *
+			 * **Note**:
+			 *
+			 * * This method can only be called while initialising plugins (in one of
+			 * the three callbacks).
+			 * * This method is accessible through the `editor.plugins.codesnippet` namespace only.
 			 *
 			 * @since 4.4
 			 * @member CKEDITOR.plugins.codesnippet
@@ -42,7 +48,7 @@
 			};
 		},
 
-		onLoad: function( editor ) {
+		onLoad: function() {
 			CKEDITOR.dialog.add( 'codeSnippet', this.path + 'dialogs/codesnippet.js' );
 		},
 
@@ -101,8 +107,10 @@
 							} );
 						}
 
-						// Note: This will work for framed editor only.
-						editor.addContentsCss( path + 'lib/highlight/styles/' + editor.config.codeSnippet_theme + '.css' );
+						// Method is available only if wysiwygarea exists.
+						if ( editor.addContentsCss ) {
+							editor.addContentsCss( path + 'lib/highlight/styles/' + editor.config.codeSnippet_theme + '.css' );
+						}
 					},
 
 					highlighter: function( code, language, callback ) {
@@ -196,8 +204,9 @@
 
 				this.ready = true;
 			}, this ) );
-		} else
+		} else {
 			this.ready = true;
+		}
 
 		/**
 		 * If specified, this function should asynchronously load highlighter-specific
@@ -273,7 +282,9 @@
 	// @param {CKEDITOR.editor} editor
 	function registerWidget( editor ) {
 		var codeClass = editor.config.codeSnippet_codeClass,
-			newLineRegex = /\r?\n/g;
+			newLineRegex = /\r?\n/g,
+			textarea = new CKEDITOR.dom.element( 'textarea' ),
+			lang = editor.lang.codesnippet;
 
 		editor.widgets.add( 'codeSnippet', {
 			allowedContent: 'pre; code(language-*)',
@@ -283,6 +294,7 @@
 			styleableElements: 'pre',
 			template: '<pre><code class="' + codeClass + '"></code></pre>',
 			dialog: 'codeSnippet',
+			pathName: lang.pathName,
 			mask: true,
 
 			parts: {
@@ -345,13 +357,19 @@
 				if ( childrenArray.length != 1 || ( code = childrenArray[ 0 ] ).name != 'code' )
 					return;
 
+				// Upcast <code> with text only: http://dev.ckeditor.com/ticket/11926#comment:4
+				if ( code.children.length != 1 || code.children[ 0 ].type != CKEDITOR.NODE_TEXT )
+					return;
+
 				// Read language-* from <code> class attribute.
 				var matchResult = editor._.codesnippet.langsRegex.exec( code.attributes[ 'class' ] );
 
 				if ( matchResult )
 					data.lang = matchResult[ 1 ];
 
-				data.code = code.getHtml();
+				// Use textarea to decode HTML entities (#11926).
+				textarea.setHtml( code.getHtml() );
+				data.code = textarea.getValue();
 
 				code.addClass( codeClass );
 
@@ -420,7 +438,7 @@ CKEDITOR.config.codeSnippet_codeClass = 'hljs';
 
 /**
  * Restricts languages available in the "Code Snippet" dialog window.
- * Node that the empty value is always added to the list.
+ * An empty value is always added to the list.
  *
  * **Note**: If using a custom highlighter library (the default is [highlight.js](http://highlightjs.org)),
  * you may need to refer to external documentation to set `config.codeSnippet_languages` properly.

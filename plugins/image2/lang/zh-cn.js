@@ -1,12 +1,12 @@
 ﻿/*
-Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 CKEDITOR.plugins.setLang( 'image2', 'zh-cn', {
 	alt: '替换文本',
 	btnUpload: '上传到服务器',
 	captioned: '带标题图像',
-	captionPlaceholder: 'Caption', // MISSING
+	captionPlaceholder: '标题',
 	infoTab: '图像信息',
 	lockRatio: '锁定比例',
 	menu: '图像属性',

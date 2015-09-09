@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -81,9 +81,11 @@ CKEDITOR.lang[ 'ar' ] = {
 		alignLeft: 'يسار',
 		alignRight: 'يمين',
 		alignCenter: 'وسط',
+		alignJustify: 'ضبط',
 		alignTop: 'أعلى',
 		alignMiddle: 'وسط',
 		alignBottom: 'أسفل',
+		alignNone: 'None', // MISSING
 		invalidValue	: 'قيمة غير مفبولة.',
 		invalidHeight: 'الارتفاع يجب أن يكون عدداً.',
 		invalidWidth: 'العرض يجب أن يكون عدداً.',

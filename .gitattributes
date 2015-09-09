@@ -6,6 +6,7 @@
 *.inc           text eol=lf
 *.ini           text eol=lf
 *.js            text eol=lf
+*.json          text eol=lf
 *.markdown      text eol=lf
 *.md            text eol=lf
 *.php           text eol=lf

@@ -1,12 +1,13 @@
 /**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
 CKEDITOR.plugins.setLang( 'codesnippet', 'ru', {
 	button: 'Вставить сниппет',
-	codeContents: 'Code content', // MISSING
-	emptySnippetError: 'A code snippet cannot be empty.', // MISSING
-	language: 'Language', // MISSING
-	title: 'Code snippet' // MISSING
+	codeContents: 'Содержимое кода',
+	emptySnippetError: 'Сниппет не может быть пустым',
+	language: 'Язык',
+	title: 'Сниппет',
+	pathName: 'сниппет'
 } );

@@ -1,12 +1,12 @@
 ﻿/*
-Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 CKEDITOR.plugins.setLang( 'image2', 'vi', {
 	alt: 'Chú thích ảnh',
 	btnUpload: 'Tải lên máy chủ',
 	captioned: 'Ảnh có chú thích',
-	captionPlaceholder: 'Caption', // MISSING
+	captionPlaceholder: 'Nhãn',
 	infoTab: 'Thông tin của ảnh',
 	lockRatio: 'Giữ nguyên tỷ lệ',
 	menu: 'Thuộc tính của ảnh',

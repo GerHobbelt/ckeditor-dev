@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -20,7 +20,7 @@
 CKEDITOR.lang[ 'lv' ] = {
 	// ARIA description.
 	editor: 'Bagātinātā teksta redaktors',
-	editorPanel: 'Rich Text Editor panel', // MISSING
+	editorPanel: 'Bagātinātā teksta redaktora panelis',
 
 	// Common messages and labels.
 	common: {
@@ -81,9 +81,11 @@ CKEDITOR.lang[ 'lv' ] = {
 		alignLeft: 'Pa kreisi',
 		alignRight: 'Pa labi',
 		alignCenter: 'Centrēti',
+		alignJustify: 'Izlīdzināt malas',
 		alignTop: 'Augšā',
 		alignMiddle: 'Vertikāli centrēts',
 		alignBottom: 'Apakšā',
+		alignNone: 'Nekas',
 		invalidValue	: 'Nekorekta vērtība',
 		invalidHeight: 'Augstumam jābūt skaitlim.',
 		invalidWidth: 'Platumam jābūt skaitlim',

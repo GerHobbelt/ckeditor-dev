@@ -1,12 +1,12 @@
 ﻿/*
-Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 CKEDITOR.plugins.setLang( 'image2', 'it', {
 	alt: 'Testo alternativo',
 	btnUpload: 'Invia al server',
 	captioned: 'Immagine con didascalia',
-	captionPlaceholder: 'Caption', // MISSING
+	captionPlaceholder: 'Didascalia',
 	infoTab: 'Informazioni immagine',
 	lockRatio: 'Blocca rapporto',
 	menu: 'Proprietà immagine',

@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -81,9 +81,11 @@ CKEDITOR.lang[ 'et' ] = {
 		alignLeft: 'Vasak',
 		alignRight: 'Paremale',
 		alignCenter: 'Kesk',
+		alignJustify: 'Rööpjoondus',
 		alignTop: 'Üles',
 		alignMiddle: 'Keskele',
 		alignBottom: 'Alla',
+		alignNone: 'None', // MISSING
 		invalidValue	: 'Vigane väärtus.',
 		invalidHeight: 'Kõrgus peab olema number.',
 		invalidWidth: 'Laius peab olema number.',

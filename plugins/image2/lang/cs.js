@@ -1,12 +1,12 @@
 ﻿/*
-Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 CKEDITOR.plugins.setLang( 'image2', 'cs', {
 	alt: 'Alternativní text',
 	btnUpload: 'Odeslat na server',
 	captioned: 'Obrázek s popisem',
-	captionPlaceholder: 'Caption', // MISSING
+	captionPlaceholder: 'Popis',
 	infoTab: 'Informace o obrázku',
 	lockRatio: 'Zámek',
 	menu: 'Vlastnosti obrázku',

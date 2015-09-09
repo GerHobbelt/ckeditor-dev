@@ -1,62 +1,65 @@
 ﻿/*
-Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 CKEDITOR.plugins.setLang( 'forms', 'tt', {
 	button: {
 		title: 'Төймә үзлекләре',
-		text: 'Text (Value)', // MISSING
+		text: 'Текст (күләм)',
 		type: 'Төр',
 		typeBtn: 'Төймә',
-		typeSbm: 'Submit', // MISSING
-		typeRst: 'Reset' // MISSING
+		typeSbm: 'Җибәрү',
+		typeRst: 'Кире кайтару'
 	},
 	checkboxAndRadio: {
 		checkboxTitle: 'Checkbox Properties', // MISSING
-		radioTitle: 'Radio Button Properties', // MISSING
-		value: 'Value', // MISSING
-		selected: 'Сайланган'
+		radioTitle: 'Радио төймə үзлекләре',
+		value: 'Күләм',
+		selected: 'Сайланган',
+		required: 'Required' // MISSING
 	},
 	form: {
-		title: 'Form Properties', // MISSING
-		menu: 'Form Properties', // MISSING
-		action: 'Action', // MISSING
-		method: 'Method', // MISSING
+		title: 'Форма үзлекләре',
+		menu: 'Форма үзлекләре',
+		action: 'Гамәл',
+		method: 'Ысул',
 		encoding: 'Кодировка'
 	},
 	hidden: {
-		title: 'Hidden Field Properties', // MISSING
+		title: 'Яшерен кыр үзлекләре',
 		name: 'Исем',
 		value: 'Күләм'
 	},
 	select: {
 		title: 'Selection Field Properties', // MISSING
 		selectInfo: 'Select Info', // MISSING
-		opAvail: 'Available Options', // MISSING
+		opAvail: 'Мөмкин булган көйләүләр',
 		value: 'Күләм',
 		size: 'Зурлык',
-		lines: 'lines', // MISSING
+		lines: 'юллар',
 		chkMulti: 'Allow multiple selections', // MISSING
+		required: 'Required', // MISSING
 		opText: 'Текст',
 		opValue: 'Күләм',
 		btnAdd: 'Кушу',
 		btnModify: 'Үзгәртү',
-		btnUp: 'Up', // MISSING
-		btnDown: 'Down', // MISSING
-		btnSetValue: 'Set as selected value', // MISSING
+		btnUp: 'Өскә',
+		btnDown: 'Аска',
+		btnSetValue: 'Сайланган күләм булып билгеләргә',
 		btnDelete: 'Бетерү'
 	},
 	textarea: {
-		title: 'Textarea Properties', // MISSING
+		title: 'Текст мәйданы үзлекләре',
 		cols: 'Баганалар',
 		rows: 'Юллар'
 	},
 	textfield: {
-		title: 'Text Field Properties', // MISSING
+		title: 'Текст кыры үзлекләре',
 		name: 'Исем',
 		value: 'Күләм',
-		charWidth: 'Character Width', // MISSING
+		charWidth: 'Символлар киңлеге',
 		maxChars: 'Maximum Characters', // MISSING
+		required: 'Required', // MISSING
 		type: 'Төр',
 		typeText: 'Текст',
 		typePass: 'Сер сүз',

@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -81,16 +81,18 @@ CKEDITOR.lang[ 'ro' ] = {
 		alignLeft: 'Mărește Bara',
 		alignRight: 'Dreapta',
 		alignCenter: 'Centru',
+		alignJustify: 'Aliniere în bloc (Block Justify)',
 		alignTop: 'Sus',
 		alignMiddle: 'Mijloc',
 		alignBottom: 'Jos',
-		invalidValue	: 'Varloare invalida',
+		alignNone: 'None', // MISSING
+		invalidValue	: 'Valoare invalidă',
 		invalidHeight: 'Înălțimea trebuie să fie un număr.',
 		invalidWidth: 'Lățimea trebuie să fie un număr.',
-		invalidCssLength: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
-		invalidHtmlLength: 'Value specified for the "%1" field must be a positive number with or without a valid HTML measurement unit (px or %).', // MISSING
-		invalidInlineStyle: 'Value specified for the inline style must consist of one or more tuples with the format of "name : value", separated by semi-colons.', // MISSING
-		cssLengthTooltip: 'Enter a number for a value in pixels or a number with a valid CSS unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
+		invalidCssLength: 'Valoarea specificată pentru câmpul "%1" trebuie să fie un număr pozitiv cu sau fără o unitate de măsură CSS (px, %, in, cm, mm, em, ex, pt, sau pc).',
+		invalidHtmlLength: 'Valoarea specificată pentru câmpul "%1" trebuie să fie un număr pozitiv cu sau fără o unitate de măsură HTML (px sau %).',
+		invalidInlineStyle: 'Valoarea specificată pentru stil trebuie să conțină una sau mai multe construcții de tipul "name : value", separate prin punct și virgulă.',
+		cssLengthTooltip: 'Introduceți un număr în pixeli sau un număr cu o unitate de măsură CSS (px, %, in, cm, mm, em, ex, pt, sau pc).',
 
 		// Put the voice-only part of the label in the span.
 		unavailable: '%1<span class="cke_accessibility">, nu este disponibil</span>'

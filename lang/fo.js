@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -56,7 +56,7 @@ CKEDITOR.lang[ 'fo' ] = {
 		advisoryTitle: 'Vegleiðandi heiti',
 		cssStyle: 'Typografi',
 		ok: 'Góðkent',
-		cancel: 'Avlýst',
+		cancel: 'Avlýs',
 		close: 'Lat aftur',
 		preview: 'Frumsýn',
 		resize: 'Drag fyri at broyta stødd',
@@ -81,9 +81,11 @@ CKEDITOR.lang[ 'fo' ] = {
 		alignLeft: 'Vinstra',
 		alignRight: 'Høgra',
 		alignCenter: 'Miðsett',
+		alignJustify: 'Javnir tekstkantar',
 		alignTop: 'Ovast',
 		alignMiddle: 'Miðja',
 		alignBottom: 'Botnur',
+		alignNone: 'Eingin',
 		invalidValue	: 'Invalid value.', // MISSING
 		invalidHeight: 'Hædd má vera eitt tal.',
 		invalidWidth: 'Breidd má vera eitt tal.',

@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -81,9 +81,11 @@ CKEDITOR.lang[ 'zh-cn' ] = {
 		alignLeft: '左对齐',
 		alignRight: '右对齐',
 		alignCenter: '居中',
+		alignJustify: '两端对齐',
 		alignTop: '顶端',
 		alignMiddle: '居中',
 		alignBottom: '底部',
+		alignNone: '无',
 		invalidValue	: '无效的值。',
 		invalidHeight: '高度必须为数字格式',
 		invalidWidth: '宽度必须为数字格式',

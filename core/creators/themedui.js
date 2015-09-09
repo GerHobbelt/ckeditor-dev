@@ -1,5 +1,5 @@
-﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+/**
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -42,9 +42,21 @@ CKEDITOR.replaceClass = 'ckeditor';
 	/**
 	 * Creates a new editor instance at the end of a specific DOM element.
 	 *
-	 *		<div id="editorSpace"></div>
-	 *		...
-	 *		CKEDITOR.appendTo( 'editorSpace' );
+	 *		<!DOCTYPE html>
+	 * 		<html>
+	 * 			<head>
+	 * 				<meta charset="utf-8">
+	 * 				<title>CKEditor</title>
+	 * 				<!-- Make sure the path to CKEditor is correct. -->
+	 *				<script src="/ckeditor/ckeditor.js"></script>
+	 *			</head>
+	 *			<body>
+	 *				<div id="editorSpace"></div>
+	 *				<script>
+	 *					CKEDITOR.appendTo( 'editorSpace' );
+	 *				</script>
+	 *			</body>
+	 *		</html>
 	 *
 	 * @param {Object/String} element The DOM element, its ID, or name.
 	 * @param {Object} [config] The specific configuration to apply to this
@@ -53,8 +65,7 @@ CKEDITOR.replaceClass = 'ckeditor';
 	 * @param {String} [data] Since 3.3. Initial value for the instance.
 	 * @returns {CKEDITOR.editor} The editor instance created.
 	 */
-	CKEDITOR.appendTo = function( element, config, data )
-	{
+	CKEDITOR.appendTo = function( element, config, data ) {
 		return createInstance( element, config, data, CKEDITOR.ELEMENT_MODE_APPENDTO );
 	};
 
@@ -76,6 +87,26 @@ CKEDITOR.replaceClass = 'ckeditor';
 	 *			// You can also customize the editor instance by having the function
 	 *			// modify the "config" parameter.
 	 *		} );
+	 *
+	 *		// Full page example where three <textarea> elements are replaced.
+	 *		<!DOCTYPE html>
+	 *		<html>
+	 *			<head>
+	 *				<meta charset="utf-8">
+	 *				<title>CKEditor</title>
+	 *				<!-- Make sure the path to CKEditor is correct. -->
+	 *				<script src="/ckeditor/ckeditor.js"></script>
+	 *			</head>
+	 *			<body>
+	 *				<textarea name="editor1"></textarea>
+	 *				<textarea name="editor2"></textarea>
+	 *				<textarea name="editor3"></textarea>
+	 *				<script>
+	 *					// Replace all three <textarea> elements above with CKEditor instances.
+	 *					CKEDITOR.replaceAll();
+	 *				</script>
+	 *			</body>
+	 *		</html>
 	 *
 	 * @param {String} [className] The `<textarea>` class name.
 	 * @param {Function} [function] An assertion function that must return `true` for a `<textarea>`
@@ -186,8 +217,9 @@ CKEDITOR.replaceClass = 'ckeditor';
 			editor.ui.space( 'contents' ).setHtml( '' );
 
 			editor.mode = '';
-		} else
+		} else {
 			editor._.previousModeData = editor.getData( 1 );
+		}
 
 		// Fire the mode handler.
 		this._.modes[ newMode ]( function() {
@@ -238,7 +270,15 @@ CKEDITOR.replaceClass = 'ckeditor';
 		var container = this.container,
 			contents = this.ui.space( 'contents' ),
 			contentsFrame = CKEDITOR.env.webkit && this.document && this.document.getWindow().$.frameElement,
-			outer = resizeInner ? container.getChild( 1 ) : container;
+			outer;
+
+		if ( resizeInner ) {
+			outer = this.container.getFirst( function( node ) {
+				return node.type == CKEDITOR.NODE_ELEMENT && node.hasClass( 'cke_inner' );
+			} );
+		} else {
+			outer = container;
+		}
 
 		// Set as border box width. (#5353)
 		outer.setSize( 'width', width, true );
@@ -247,15 +287,24 @@ CKEDITOR.replaceClass = 'ckeditor';
 		contentsFrame && ( contentsFrame.style.width = '1%' );
 
 		// Get the height delta between the outer table and the content area.
+		var contentsOuterDelta = ( outer.$.offsetHeight || 0 ) - ( contents.$.clientHeight || 0 ),
+
 		// If we're setting the content area's height, then we don't need the delta.
-		var delta = isContentHeight ? 0 : ( outer.$.offsetHeight || 0 ) - ( contents.$.clientHeight || 0 );
-		contents.setStyle( 'height', Math.max( height - delta, 0 ) + 'px' );
+			resultContentsHeight = Math.max( height - ( isContentHeight ? 0 : contentsOuterDelta ), 0 ),
+			resultOuterHeight = ( isContentHeight ? height + contentsOuterDelta : height );
+
+		contents.setStyle( 'height', resultContentsHeight + 'px' );
 
 		// WebKit needs to refresh the iframe size to avoid rendering issues. (2/2) (#8348)
 		contentsFrame && ( contentsFrame.style.width = '100%' );
 
 		// Emit a resize event.
-		this.fire( 'resize' );
+		this.fire( 'resize', {
+			outerHeight: resultOuterHeight,
+			contentsHeight: resultContentsHeight,
+			// Sometimes width is not provided.
+			outerWidth: width || outer.getSize( 'width' )
+		} );
 	};
 
 	/**
@@ -338,8 +387,6 @@ CKEDITOR.replaceClass = 'ckeditor';
 		}
 	}
 
-	var themedTpl;
-
 	function loadTheme( editor ) {
 		var name = editor.name,
 			element = editor.element,
@@ -349,29 +396,29 @@ CKEDITOR.replaceClass = 'ckeditor';
 		var topHtml = editor.fire( 'uiSpace', { space: 'top', html: '' } ).html;
 		var bottomHtml = editor.fire( 'uiSpace', { space: 'bottom', html: '' } ).html;
 
-		if ( !themedTpl ) {
-			themedTpl = CKEDITOR.addTemplate( 'maincontainer', '<{outerEl}' +
+		var themedTpl = new CKEDITOR.template(
+			'<{outerEl}' +
 				' id="cke_{name}"' +
 				' class="{id} cke cke_reset cke_chrome cke_editor_{name} cke_{langDir} ' + CKEDITOR.env.cssClass + '" ' +
 				' dir="{langDir}"' +
 				' lang="{langCode}"' +
 				' role="application"' +
-				' aria-labelledby="cke_{name}_arialbl">' +
-				'<span id="cke_{name}_arialbl" class="cke_voice_label">{voiceLabel}</span>' +
-					'<{outerEl} class="cke_inner cke_reset" role="presentation">' +
-						'{topHtml}' +
-						'<{outerEl} id="{contentId}" class="cke_contents cke_reset" role="presentation"></{outerEl}>' +
-						'{bottomHtml}' +
-					'</{outerEl}>' +
-				'</{outerEl}>' );
-		}
+				( editor.title ? ' aria-labelledby="cke_{name}_arialbl"' : '' ) +
+				'>' +
+				( editor.title ? '<span id="cke_{name}_arialbl" class="cke_voice_label">{voiceLabel}</span>' : '' ) +
+				'<{outerEl} class="cke_inner cke_reset" role="presentation">' +
+					'{topHtml}' +
+					'<{outerEl} id="{contentId}" class="cke_contents cke_reset" role="presentation"></{outerEl}>' +
+					'{bottomHtml}' +
+				'</{outerEl}>' +
+			'</{outerEl}>' );
 
 		var container = CKEDITOR.dom.element.createFromHtml( themedTpl.output( {
 			id: editor.id,
 			name: name,
 			langDir: editor.lang.dir,
 			langCode: editor.langCode,
-			voiceLabel: [ editor.lang.editor, editor.name ].join( ', ' ),
+			voiceLabel: editor.title,
 			topHtml: topHtml ? '<span id="' + editor.ui.spaceId( 'top' ) + '" class="cke_top cke_reset_all" role="presentation" style="height:auto">' + topHtml + '</span>' : '',
 			contentId: editor.ui.spaceId( 'contents' ),
 			bottomHtml: bottomHtml ? '<span id="' + editor.ui.spaceId( 'bottom' ) + '" class="cke_bottom cke_reset_all" role="presentation">' + bottomHtml + '</span>' : '',
@@ -381,10 +428,12 @@ CKEDITOR.replaceClass = 'ckeditor';
 		if ( elementMode == CKEDITOR.ELEMENT_MODE_REPLACE ) {
 			element.hide();
 			container.insertAfter( element );
-		} else
+		} else {
 			element.append( container );
+		}
 
 		editor.container = container;
+		editor.ui.contentsElement = editor.ui.space( 'contents' );
 
 		// Make top and bottom spaces unelectable, but not content space,
 		// otherwise the editable area would be affected.
@@ -443,6 +492,10 @@ CKEDITOR.config.startupMode = 'wysiwyg';
  *
  * @event resize
  * @param {CKEDITOR.editor} editor This editor instance.
+ * @param {Object} data Available since CKEditor 4.5.
+ * @param {Number} data.outerHeight The height of the entire area that the editor covers.
+ * @param {Number} data.contentsHeight Editable area height in pixels.
+ * @param {Number} data.outerWidth The width of the entire area that the editor covers.
  */
 
 /**

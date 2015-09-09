@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -81,9 +81,11 @@ CKEDITOR.lang[ 'vi' ] = {
 		alignLeft: 'Trái',
 		alignRight: 'Phải',
 		alignCenter: 'Giữa',
+		alignJustify: 'Sắp chữ',
 		alignTop: 'Trên',
 		alignMiddle: 'Giữa',
 		alignBottom: 'Dưới',
+		alignNone: 'Không',
 		invalidValue	: 'Giá trị không hợp lệ.',
 		invalidHeight: 'Chiều cao phải là số nguyên.',
 		invalidWidth: 'Chiều rộng phải là số nguyên.',
